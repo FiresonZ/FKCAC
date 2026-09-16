@@ -1,0 +1,12 @@
+[
+  {
+    "modid": "fkcac",
+    "name": "FKCAC",
+    "version": "${modVersion}",
+    "mcversion": "1.7.10",
+    "description": "FKCAC (Fuck CatAntiCheat): 针对 CatServer / CatAntiCheat 插件通讯协议的 1.7.10 Forge 客户端 Mod，用于自建服务器反作弊鲁棒性测试。",
+    "credits": "",
+    "authorList": ["FiresonZ"],
+    "dependencies": []
+  }
+]
