@@ -1,0 +1,14 @@
+# Line endings
+* text=auto
+
+# Shell scripts must stay LF even on Windows
+*.sh text eol=lf
+gradlew text eol=lf
+
+# Batch files should use CRLF on Windows
+*.bat text eol=crlf
+
+# Binaries
+*.jar binary
+*.png binary
+*.ico binary
