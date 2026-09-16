@@ -1,0 +1,478 @@
+2026-09-16T13:04:49.1949120Z Current runner version: '2.337.0'
+2026-09-16T13:04:49.1969832Z ##[group]Runner Image Provisioner
+2026-09-16T13:04:49.1970525Z Hosted Compute Agent
+2026-09-16T13:04:49.1971110Z Version: 20260828.587
+2026-09-16T13:04:49.1971637Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+2026-09-16T13:04:49.1972216Z Build Date: 2026-08-28T16:44:25Z
+2026-09-16T13:04:49.1972855Z Worker ID: {5ebc324f-a3bb-4b66-8250-cdf876d04c0b}
+2026-09-16T13:04:49.1973572Z Azure Region: westus
+2026-09-16T13:04:49.1974064Z ##[endgroup]
+2026-09-16T13:04:49.1975250Z ##[group]Operating System
+2026-09-16T13:04:49.1975758Z Ubuntu
+2026-09-16T13:04:49.1976272Z 24.04.5
+2026-09-16T13:04:49.1976700Z LTS
+2026-09-16T13:04:49.1977188Z ##[endgroup]
+2026-09-16T13:04:49.1977653Z ##[group]Runner Image
+2026-09-16T13:04:49.1978142Z Image: ubuntu-24.04
+2026-09-16T13:04:49.1978677Z Version: 20260907.300.1
+2026-09-16T13:04:49.1979698Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260907.300/images/ubuntu/Ubuntu2404-Readme.md
+2026-09-16T13:04:49.1980979Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260907.300
+2026-09-16T13:04:49.1981767Z ##[endgroup]
+2026-09-16T13:04:49.1982775Z ##[group]GITHUB_TOKEN Permissions
+2026-09-16T13:04:49.1984890Z Contents: read
+2026-09-16T13:04:49.1985475Z Metadata: read
+2026-09-16T13:04:49.1985943Z Packages: read
+2026-09-16T13:04:49.1986406Z ##[endgroup]
+2026-09-16T13:04:49.1988139Z Secret source: Actions
+2026-09-16T13:04:49.1989199Z Cache mode: write
+2026-09-16T13:04:49.1989966Z Prepare workflow directory
+2026-09-16T13:04:49.2626049Z Prepare all required actions
+2026-09-16T13:04:49.2664279Z Getting action download info
+2026-09-16T13:04:49.6129303Z Download action repository 'actions/checkout@v5' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+2026-09-16T13:04:49.8564299Z Download action repository 'actions/setup-java@v5' (SHA:b6effb05e454b25005698d916606bdc6ffcbf961)
+2026-09-16T13:04:51.2699236Z Download action repository 'gradle/actions@v5' (SHA:0723195856401067f7a2779048b490ace7a47d7c)
+2026-09-16T13:04:53.0293561Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-09-16T13:04:53.3850733Z Complete job name: Build (1.7.10)
+2026-09-16T13:04:53.4409670Z ##[group]Run actions/checkout@v5
+2026-09-16T13:04:53.4410157Z with:
+2026-09-16T13:04:53.4410384Z   repository: FiresonZ/FKCAC
+2026-09-16T13:04:53.4412315Z   token: ***
+2026-09-16T13:04:53.4412585Z   ssh-strict: true
+2026-09-16T13:04:53.4412800Z   ssh-user: git
+2026-09-16T13:04:53.4413015Z   persist-credentials: true
+2026-09-16T13:04:53.4413457Z   clean: true
+2026-09-16T13:04:53.4413684Z   sparse-checkout-cone-mode: true
+2026-09-16T13:04:53.4413936Z   fetch-depth: 1
+2026-09-16T13:04:53.4414155Z   fetch-tags: false
+2026-09-16T13:04:53.4414365Z   show-progress: true
+2026-09-16T13:04:53.4414583Z   lfs: false
+2026-09-16T13:04:53.4414782Z   submodules: false
+2026-09-16T13:04:53.4415000Z   set-safe-directory: true
+2026-09-16T13:04:53.4415243Z   allow-unsafe-pr-checkout: false
+2026-09-16T13:04:53.4415710Z env:
+2026-09-16T13:04:53.4415944Z   GRADLE_OPTS: -Dorg.gradle.console=plain
+2026-09-16T13:04:53.4416215Z ##[endgroup]
+2026-09-16T13:04:53.5251724Z Syncing repository: FiresonZ/FKCAC
+2026-09-16T13:04:53.5252945Z ##[group]Getting Git version info
+2026-09-16T13:04:53.5253480Z Working directory is '/home/runner/work/FKCAC/FKCAC'
+2026-09-16T13:04:53.5254050Z [command]/usr/bin/git version
+2026-09-16T13:04:53.5322518Z git version 2.55.0
+2026-09-16T13:04:53.5344546Z ##[endgroup]
+2026-09-16T13:04:53.5351610Z Temporarily overriding HOME='/home/runner/work/_temp/7b5e0c99-c5f0-4a56-8cb1-ed4991db4da5' before making global git config changes
+2026-09-16T13:04:53.5352910Z Adding repository directory to the temporary git global config as a safe directory
+2026-09-16T13:04:53.5356932Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/FKCAC/FKCAC
+2026-09-16T13:04:53.5404828Z Deleting the contents of '/home/runner/work/FKCAC/FKCAC'
+2026-09-16T13:04:53.5408012Z ##[group]Initializing the repository
+2026-09-16T13:04:53.5411555Z [command]/usr/bin/git init /home/runner/work/FKCAC/FKCAC
+2026-09-16T13:04:53.7306803Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-09-16T13:04:53.7307698Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-09-16T13:04:53.7308432Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-09-16T13:04:53.7308954Z hint: call:
+2026-09-16T13:04:53.7309247Z hint:
+2026-09-16T13:04:53.7309659Z hint: 	git config --global init.defaultBranch <name>
+2026-09-16T13:04:53.7310145Z hint:
+2026-09-16T13:04:53.7310564Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-09-16T13:04:53.7311238Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-09-16T13:04:53.7311761Z hint:
+2026-09-16T13:04:53.7312060Z hint: 	git branch -m <name>
+2026-09-16T13:04:53.7312392Z hint:
+2026-09-16T13:04:53.7312851Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-09-16T13:04:53.7313842Z Initialized empty Git repository in /home/runner/work/FKCAC/FKCAC/.git/
+2026-09-16T13:04:53.7315517Z [command]/usr/bin/git remote add origin https://github.com/FiresonZ/FKCAC
+2026-09-16T13:04:53.7362038Z ##[endgroup]
+2026-09-16T13:04:53.7362643Z ##[group]Disabling automatic garbage collection
+2026-09-16T13:04:53.7364746Z [command]/usr/bin/git config --local gc.auto 0
+2026-09-16T13:04:53.7453839Z ##[endgroup]
+2026-09-16T13:04:53.7454466Z ##[group]Setting up auth
+2026-09-16T13:04:53.7455055Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-16T13:04:53.7456547Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-16T13:04:53.7736374Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-09-16T13:04:53.7765240Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-09-16T13:04:53.7955687Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-09-16T13:04:53.7986631Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-09-16T13:04:53.8175317Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-09-16T13:04:53.8207037Z ##[endgroup]
+2026-09-16T13:04:53.8207441Z ##[group]Fetching the repository
+2026-09-16T13:04:53.8214049Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +184ac8a9074f7548eccf480de225bbd6e7f102d8:refs/remotes/origin/codex
+2026-09-16T13:04:54.4002638Z From https://github.com/FiresonZ/FKCAC
+2026-09-16T13:04:54.4003285Z  * [new ref]         184ac8a9074f7548eccf480de225bbd6e7f102d8 -> origin/codex
+2026-09-16T13:04:54.4006867Z ##[endgroup]
+2026-09-16T13:04:54.4007256Z ##[group]Determining the checkout info
+2026-09-16T13:04:54.4009544Z ##[endgroup]
+2026-09-16T13:04:54.4015660Z [command]/usr/bin/git sparse-checkout disable
+2026-09-16T13:04:54.4065666Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-09-16T13:04:54.4091747Z ##[group]Checking out the ref
+2026-09-16T13:04:54.4095976Z [command]/usr/bin/git checkout --progress --force -B codex refs/remotes/origin/codex
+2026-09-16T13:04:54.4169511Z Switched to a new branch 'codex'
+2026-09-16T13:04:54.4174046Z branch 'codex' set up to track 'origin/codex'.
+2026-09-16T13:04:54.4178313Z ##[endgroup]
+2026-09-16T13:04:54.4214453Z [command]/usr/bin/git log -1 --format=%H
+2026-09-16T13:04:54.4236677Z 184ac8a9074f7548eccf480de225bbd6e7f102d8
+2026-09-16T13:04:54.4465768Z ##[group]Run actions/setup-java@v5
+2026-09-16T13:04:54.4466016Z with:
+2026-09-16T13:04:54.4466329Z   java-version: 25
+2026-09-16T13:04:54.4466518Z   distribution: temurin
+2026-09-16T13:04:54.4466704Z   java-package: jdk
+2026-09-16T13:04:54.4466891Z   check-latest: false
+2026-09-16T13:04:54.4467067Z   set-default: true
+2026-09-16T13:04:54.4467243Z   verify-signature: false
+2026-09-16T13:04:54.4467426Z   server-id: github
+2026-09-16T13:04:54.4467604Z   server-username: GITHUB_ACTOR
+2026-09-16T13:04:54.4467812Z   server-password: GITHUB_TOKEN
+2026-09-16T13:04:54.4468017Z   overwrite-settings: true
+2026-09-16T13:04:54.4468208Z   job-status: success
+2026-09-16T13:04:54.4469999Z   token: ***
+2026-09-16T13:04:54.4470192Z   show-download-progress: false
+2026-09-16T13:04:54.4470391Z env:
+2026-09-16T13:04:54.4470574Z   GRADLE_OPTS: -Dorg.gradle.console=plain
+2026-09-16T13:04:54.4470805Z ##[endgroup]
+2026-09-16T13:04:54.5652425Z ##[group]Installed distributions
+2026-09-16T13:04:54.5705097Z Resolved Java 25.0.4+1 from tool-cache
+2026-09-16T13:04:54.5705488Z Setting Java 25.0.4+1 as the default
+2026-09-16T13:04:54.5713008Z Creating toolchains.xml for JDK version 25 from temurin
+2026-09-16T13:04:54.5769453Z Writing to /home/runner/.m2/toolchains.xml
+2026-09-16T13:04:54.5769751Z 
+2026-09-16T13:04:54.5769865Z Java configuration:
+2026-09-16T13:04:54.5770133Z   Distribution: temurin
+2026-09-16T13:04:54.5770420Z   Version: 25.0.4+1
+2026-09-16T13:04:54.5770809Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.4-1/x64
+2026-09-16T13:04:54.5771162Z 
+2026-09-16T13:04:54.5771541Z ##[endgroup]
+2026-09-16T13:04:54.5799211Z Creating settings.xml with server-id: github
+2026-09-16T13:04:54.5799565Z Writing to /home/runner/.m2/settings.xml
+2026-09-16T13:04:54.5804319Z Configured MAVEN_ARGS to include -ntp to suppress Maven transfer progress logs. Set 'show-download-progress: true' to keep the download progress output.
+2026-09-16T13:04:54.6072158Z ##[group]Run gradle/actions/setup-gradle@v5
+2026-09-16T13:04:54.6072579Z with:
+2026-09-16T13:04:54.6072831Z   validate-wrappers: true
+2026-09-16T13:04:54.6073246Z   cache-disabled: false
+2026-09-16T13:04:54.6073605Z   cache-read-only: true
+2026-09-16T13:04:54.6073934Z   cache-write-only: false
+2026-09-16T13:04:54.6074251Z   cache-overwrite-existing: false
+2026-09-16T13:04:54.6074662Z   cache-cleanup: on-success
+2026-09-16T13:04:54.6075185Z   gradle-home-cache-includes: caches
+notifications
+
+2026-09-16T13:04:54.6075791Z   add-job-summary: always
+2026-09-16T13:04:54.6076124Z   add-job-summary-as-pr-comment: never
+2026-09-16T13:04:54.6076582Z   dependency-graph: disabled
+2026-09-16T13:04:54.6076991Z   dependency-graph-report-dir: dependency-graph-reports
+2026-09-16T13:04:54.6077471Z   dependency-graph-continue-on-failure: true
+2026-09-16T13:04:54.6077861Z   build-scan-publish: false
+2026-09-16T13:04:54.6078199Z   allow-snapshot-wrappers: false
+2026-09-16T13:04:54.6078643Z   gradle-home-cache-strict-match: false
+2026-09-16T13:04:54.6079019Z   workflow-job-context: null
+2026-09-16T13:04:54.6082343Z   github-token: ***
+2026-09-16T13:04:54.6082610Z env:
+2026-09-16T13:04:54.6083282Z   GRADLE_OPTS: -Dorg.gradle.console=plain
+2026-09-16T13:04:54.6083790Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.4-1/x64
+2026-09-16T13:04:54.6084415Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.4-1/x64
+2026-09-16T13:04:54.6084902Z   MAVEN_ARGS: -ntp
+2026-09-16T13:04:54.6085178Z ##[endgroup]
+2026-09-16T13:04:57.8557706Z Merged default JDK locations into /home/runner/.m2/toolchains.xml
+2026-09-16T13:04:57.8560179Z ##[group]Restore Gradle state from cache
+2026-09-16T13:04:58.1150425Z Cache hit for restore-key: gradle-home-v1|Linux-X64|build[f82e205999662e2554d9b4726473f10d]-3f089da9a0166f695810b6ce149f46dd6b3bd4c3
+2026-09-16T13:04:58.7117405Z Received 20796 of 20796 (100.0%), 0.1 MBs/sec
+2026-09-16T13:04:58.7118782Z Cache Size: ~0 MB (20796 B)
+2026-09-16T13:04:58.7150969Z [command]/usr/bin/tar -xf /home/runner/work/_temp/7e02b246-36ab-4a46-bad6-b439f8ff9bab/cache.tzst -P -C /home/runner/work/FKCAC/FKCAC --use-compress-program unzstd
+2026-09-16T13:04:58.7251039Z Cache restored successfully
+2026-09-16T13:04:58.7273077Z Restored cache entry with key gradle-home-v1|Linux-X64|build[f82e205999662e2554d9b4726473f10d]-184ac8a9074f7548eccf480de225bbd6e7f102d8 to /home/runner/.gradle/caches,/home/runner/.gradle/notifications,/home/runner/.gradle/.setup-gradle in 871ms
+2026-09-16T13:04:58.9836955Z Cache hit for: gradle-transforms-v1-a64ba26221bb878f5eb67f092d312cdc
+2026-09-16T13:04:58.9860248Z Cache hit for: gradle-generated-gradle-jars-v1-385d131625f54d4dab75422dfcb34a24
+2026-09-16T13:04:58.9893793Z Cache hit for: gradle-groovy-dsl-v1-ace08e5ba8cc3641b961006ed029cc6e
+2026-09-16T13:04:58.9955401Z Cache hit for: gradle-dependencies-v1-75ce4b4915f0974b7244e9a02a782776
+2026-09-16T13:04:59.0177575Z Cache hit for: gradle-instrumented-jars-v1-bb910fcacf708cb42c10c2b5b22b5d19
+2026-09-16T13:04:59.0206285Z Cache hit for: gradle-wrapper-zips-v1-1922ac6863145c4cf78b9888f5904620
+2026-09-16T13:04:59.0213537Z Cache hit for: gradle-kotlin-dsl-v1-18c2427dd562c09e5eafe56eb88c2be2
+2026-09-16T13:04:59.4404452Z Received 60338 of 60338 (100.0%), 0.3 MBs/sec
+2026-09-16T13:04:59.4405048Z Cache Size: ~0 MB (60338 B)
+2026-09-16T13:04:59.4891766Z [command]/usr/bin/tar -xf /home/runner/work/_temp/8e57c2ba-f24c-4d50-9fd2-2d1f2ea4e37d/cache.tzst -P -C /home/runner/work/FKCAC/FKCAC --use-compress-program unzstd
+2026-09-16T13:04:59.4967555Z Cache restored successfully
+2026-09-16T13:04:59.4969366Z Restored cache entry with key gradle-instrumented-jars-v1-bb910fcacf708cb42c10c2b5b22b5d19 to /home/runner/.gradle/caches/jars-*/*/ in 768ms
+2026-09-16T13:04:59.5555316Z Received 15411 of 15411 (100.0%), 0.1 MBs/sec
+2026-09-16T13:04:59.5555883Z Cache Size: ~0 MB (15411 B)
+2026-09-16T13:04:59.5556939Z [command]/usr/bin/tar -xf /home/runner/work/_temp/474602ca-e8ff-4e8a-9580-54e85d20bfd3/cache.tzst -P -C /home/runner/work/FKCAC/FKCAC --use-compress-program unzstd
+2026-09-16T13:04:59.5632969Z Cache restored successfully
+2026-09-16T13:04:59.5634921Z Restored cache entry with key gradle-kotlin-dsl-v1-18c2427dd562c09e5eafe56eb88c2be2 to /home/runner/.gradle/caches/*/kotlin-dsl/accessors/*/,/home/runner/.gradle/caches/*/kotlin-dsl/scripts/*/ in 835ms
+2026-09-16T13:04:59.6631623Z Received 91789 of 91789 (100.0%), 0.2 MBs/sec
+2026-09-16T13:04:59.6632182Z Cache Size: ~0 MB (91789 B)
+2026-09-16T13:04:59.6647877Z [command]/usr/bin/tar -xf /home/runner/work/_temp/a1f7607e-5330-4cc8-9362-d491a3f61bf0/cache.tzst -P -C /home/runner/work/FKCAC/FKCAC --use-compress-program unzstd
+2026-09-16T13:04:59.6755489Z Cache restored successfully
+2026-09-16T13:04:59.6756991Z Restored cache entry with key gradle-groovy-dsl-v1-ace08e5ba8cc3641b961006ed029cc6e to /home/runner/.gradle/caches/*/groovy-dsl/*/ in 947ms
+2026-09-16T13:05:00.2397991Z Received 4194304 of 42071659 (10.0%), 4.0 MBs/sec
+2026-09-16T13:05:00.2484336Z Received 4194304 of 42293954 (9.9%), 4.0 MBs/sec
+2026-09-16T13:05:00.2615090Z Received 793424 of 30153552 (2.6%), 0.8 MBs/sec
+2026-09-16T13:05:00.2985959Z Received 0 of 139588914 (0.0%), 0.0 MBs/sec
+2026-09-16T13:05:00.5179398Z Received 30153552 of 30153552 (100.0%), 22.9 MBs/sec
+2026-09-16T13:05:00.5181109Z Cache Size: ~29 MB (30153552 B)
+2026-09-16T13:05:00.5219557Z [command]/usr/bin/tar -xf /home/runner/work/_temp/aa98fdee-dd2e-4679-9af0-f832b3e1f338/cache.tzst -P -C /home/runner/work/FKCAC/FKCAC --use-compress-program unzstd
+2026-09-16T13:05:00.5724953Z Received 42071659 of 42071659 (100.0%), 30.1 MBs/sec
+2026-09-16T13:05:00.5742368Z Cache Size: ~40 MB (42071659 B)
+2026-09-16T13:05:00.5828885Z Received 42293954 of 42293954 (100.0%), 30.2 MBs/sec
+2026-09-16T13:05:00.5843817Z Cache Size: ~40 MB (42293954 B)
+2026-09-16T13:05:00.5957530Z [command]/usr/bin/tar -xf /home/runner/work/_temp/b0363384-4ce3-4e57-b705-086e18be962d/cache.tzst -P -C /home/runner/work/FKCAC/FKCAC --use-compress-program unzstd
+2026-09-16T13:05:00.6024378Z [command]/usr/bin/tar -xf /home/runner/work/_temp/426942b2-8a96-46af-af6f-0f6518aabadd/cache.tzst -P -C /home/runner/work/FKCAC/FKCAC --use-compress-program unzstd
+2026-09-16T13:05:00.7072754Z Cache restored successfully
+2026-09-16T13:05:00.7224833Z Restored cache entry with key gradle-dependencies-v1-75ce4b4915f0974b7244e9a02a782776 to /home/runner/.gradle/caches/modules-*/files-*/*/*/*/* in 1991ms
+2026-09-16T13:05:00.7613465Z Cache restored successfully
+2026-09-16T13:05:00.7629768Z Restored cache entry with key gradle-transforms-v1-a64ba26221bb878f5eb67f092d312cdc to /home/runner/.gradle/caches/transforms-4/*/,/home/runner/.gradle/caches/*/transforms/*/ in 2033ms
+2026-09-16T13:05:00.9041873Z Cache restored successfully
+2026-09-16T13:05:00.9059084Z Restored cache entry with key gradle-generated-gradle-jars-v1-385d131625f54d4dab75422dfcb34a24 to /home/runner/.gradle/caches/9.5.0/generated-gradle-jars/gradle-api-9.5.0.jar in 2178ms
+2026-09-16T13:05:01.2996206Z Received 96468992 of 139588914 (69.1%), 46.0 MBs/sec
+2026-09-16T13:05:02.2995876Z Received 135394610 of 139588914 (97.0%), 43.0 MBs/sec
+2026-09-16T13:05:02.5967918Z Received 139588914 of 139588914 (100.0%), 40.4 MBs/sec
+2026-09-16T13:05:02.5969915Z Cache Size: ~133 MB (139588914 B)
+2026-09-16T13:05:02.6092324Z [command]/usr/bin/tar -xf /home/runner/work/_temp/575e8041-ea79-4978-83b0-417ed7cee314/cache.tzst -P -C /home/runner/work/FKCAC/FKCAC --use-compress-program unzstd
+2026-09-16T13:05:02.7744789Z Cache restored successfully
+2026-09-16T13:05:02.7800927Z Restored cache entry with key gradle-wrapper-zips-v1-1922ac6863145c4cf78b9888f5904620 to /home/runner/.gradle/wrapper/dists/gradle-9.5.0-bin/bvnork1r7n8i6kp5cnkibsc9q in 4051ms
+2026-09-16T13:05:02.7940751Z ##[endgroup]
+2026-09-16T13:05:02.8004675Z ##[group]All Gradle Wrapper jars are valid
+2026-09-16T13:05:02.8005549Z ✓ Found known Gradle Wrapper JAR files:
+2026-09-16T13:05:02.8006024Z   497c8c2a7e5031f6aa847f88104aa80a93532ec32ee17bdb8d1d2f67a194a9c7 gradle/wrapper/gradle-wrapper.jar
+2026-09-16T13:05:02.8006627Z ##[endgroup]
+2026-09-16T13:05:02.8147301Z ##[group]Run chmod +x gradlew
+2026-09-16T13:05:02.8147642Z [36;1mchmod +x gradlew[0m
+2026-09-16T13:05:02.8182605Z shell: /usr/bin/bash -e {0}
+2026-09-16T13:05:02.8182866Z env:
+2026-09-16T13:05:02.8183283Z   GRADLE_OPTS: -Dorg.gradle.console=plain
+2026-09-16T13:05:02.8183704Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.4-1/x64
+2026-09-16T13:05:02.8184157Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.4-1/x64
+2026-09-16T13:05:02.8184506Z   MAVEN_ARGS: -ntp
+2026-09-16T13:05:02.8184774Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-09-16T13:05:02.8185087Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-09-16T13:05:02.8185370Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-09-16T13:05:02.8185669Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-09-16T13:05:02.8186064Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-09-16T13:05:02.8186478Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-09-16T13:05:02.8186823Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-09-16T13:05:02.8187075Z ##[endgroup]
+2026-09-16T13:05:02.8408955Z ##[group]Run ./gradlew build -PmodVersion="0.0.1" --stacktrace
+2026-09-16T13:05:02.8409391Z [36;1m./gradlew build -PmodVersion="0.0.1" --stacktrace[0m
+2026-09-16T13:05:02.8438052Z shell: /usr/bin/bash -e {0}
+2026-09-16T13:05:02.8438302Z env:
+2026-09-16T13:05:02.8438535Z   GRADLE_OPTS: -Dorg.gradle.console=plain
+2026-09-16T13:05:02.8438900Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.4-1/x64
+2026-09-16T13:05:02.8439338Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/25.0.4-1/x64
+2026-09-16T13:05:02.8439684Z   MAVEN_ARGS: -ntp
+2026-09-16T13:05:02.8439930Z   GRADLE_ACTION_ID: gradle/actions/setup-gradle
+2026-09-16T13:05:02.8440235Z   GRADLE_USER_HOME: /home/runner/.gradle
+2026-09-16T13:05:02.8440515Z   GRADLE_BUILD_ACTION_SETUP_COMPLETED: true
+2026-09-16T13:05:02.8440801Z   GRADLE_BUILD_ACTION_CACHE_RESTORED: true
+2026-09-16T13:05:02.8441199Z   DEVELOCITY_INJECTION_INIT_SCRIPT_NAME: gradle-actions.inject-develocity.init.gradle
+2026-09-16T13:05:02.8441658Z   DEVELOCITY_INJECTION_CUSTOM_VALUE: gradle-actions
+2026-09-16T13:05:02.8441961Z   GITHUB_DEPENDENCY_GRAPH_ENABLED: false
+2026-09-16T13:05:02.8442358Z ##[endgroup]
+2026-09-16T13:05:05.2556121Z Starting a Gradle Daemon (subsequent builds will be faster)
+2026-09-16T13:05:09.9554411Z Calculating task graph as no cached configuration is available for tasks: build
+2026-09-16T13:05:18.5557214Z 
+2026-09-16T13:05:18.5562431Z > Configure project :
+2026-09-16T13:05:18.5563298Z Download https://launchermeta.mojang.com/mc/game/version_manifest.json
+2026-09-16T13:05:33.8572759Z Downloading data into the RFG cache from [https://maven.minecraftforge.net/de/oceanlabs/mcp/mcp/1.7.10/mcp-1.7.10-srg.zip, https://maven.minecraftforge.net/de/oceanlabs/mcp/mcp_stable/12-1.7.10/mcp_stable-12-1.7.10.zip]...
+2026-09-16T13:05:33.9564857Z Downloading data into the RFG cache from [https://maven.minecraftforge.net/net/minecraftforge/forge/1.7.10-10.13.4.1614-1.7.10/forge-1.7.10-10.13.4.1614-1.7.10-userdev.jar]...
+2026-09-16T13:05:38.3553855Z Download https://piston-meta.mojang.com/v1/packages/ed5d8789ed29872ea2ef1c348302b0c55e3f3468/1.7.10.json
+2026-09-16T13:05:50.3573855Z 
+2026-09-16T13:05:50.3574889Z > Task :extractDependencyATs SKIPPED
+2026-09-16T13:05:50.3603793Z > Task :compileInjectedInterfacesJava NO-SOURCE
+2026-09-16T13:05:50.3633815Z > Task :processInjectedInterfacesResources NO-SOURCE
+2026-09-16T13:05:50.3635200Z > Task :injectedInterfacesClasses UP-TO-DATE
+2026-09-16T13:05:50.3663649Z > Task :processApiResources NO-SOURCE
+2026-09-16T13:05:50.3693557Z > Task :injectTags
+2026-09-16T13:05:50.4551036Z 
+2026-09-16T13:05:50.4584128Z > Task :downloadFernflower
+2026-09-16T13:05:50.4613863Z Download https://files.minecraftforge.net/fernflower-fix-1.0.zip
+2026-09-16T13:05:50.5553643Z 
+2026-09-16T13:05:50.5614267Z > Task :extractNatives2
+2026-09-16T13:05:50.5643812Z > Task :processInjectedTagsResources NO-SOURCE
+2026-09-16T13:05:50.5683901Z > Task :processMcLauncherResources NO-SOURCE
+2026-09-16T13:05:50.8593735Z 
+2026-09-16T13:05:50.8644406Z > Task :downloadVanillaJars
+2026-09-16T13:05:50.8664962Z Download https://launcher.mojang.com/v1/objects/e80d9b3bf5085002218d4be59e668bac718abbc6/client.jar
+2026-09-16T13:05:50.8702553Z Download https://launcher.mojang.com/v1/objects/952438ac4e01b4d115c5fc38f891710c4941df29/server.jar
+2026-09-16T13:05:51.2563546Z 
+2026-09-16T13:05:51.2593979Z > Task :processResources
+2026-09-16T13:05:51.2623769Z > Task :processTestResources NO-SOURCE
+2026-09-16T13:05:51.4552733Z > Task :generateForgeSrgMappings
+2026-09-16T13:05:51.4585108Z > Task :createMcLauncherFiles
+2026-09-16T13:05:52.3584131Z > Task :compileInjectedTagsJava
+2026-09-16T13:05:52.3613588Z > Task :injectedTagsClasses
+2026-09-16T13:05:52.4552183Z > Task :mergeVanillaSidedJars
+2026-09-16T13:05:54.4593613Z 
+2026-09-16T13:05:54.4594748Z > Task :deobfuscateMergedJarToSrg
+2026-09-16T13:05:54.4613501Z Applying SpecialSource
+2026-09-16T13:05:54.4623806Z Loading 2 AccessTransformers
+2026-09-16T13:05:54.4654984Z Loading AccessTransformer /home/runner/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.10-10.13.4.1614-1.7.10/unpacked/src/main/resources/fml_at.cfg
+2026-09-16T13:05:54.4684367Z Loading AccessTransformer /home/runner/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.10-10.13.4.1614-1.7.10/unpacked/src/main/resources/forge_at.cfg
+2026-09-16T13:05:54.4714412Z INFO: merging AccessMap net/minecraft/item/ItemBlock/field_150939_a from AccessChange(clear=0, set=0, vis=1) with AccessChange(clear=0, set=0, vis=1)
+2026-09-16T13:05:54.4733632Z Renamed 0 AT entries
+2026-09-16T13:05:55.5554332Z Applying Exceptor
+2026-09-16T13:05:56.6556982Z Cleaning up generated debuginfo
+2026-09-16T13:05:59.3603868Z 
+2026-09-16T13:05:59.3644131Z > Task :decompileSrgJar
+2026-09-16T13:05:59.3674723Z Didn't find cached decompiled jar, decompiling and saving to /home/runner/.gradle/caches/retro_futura_gradle/fernflower-cache/f857d0a5dc440e9576a099ffe2dcf0f57f62ec6a9a90cdd7e8a27d4573e0504b-d253f2106b6c42cd09e68e3eb271a05bffc1063ab065ac1a7425f1586d3b5891.jar
+2026-09-16T13:05:59.3676358Z Decompiling the srg jar with fernflower
+2026-09-16T13:06:00.3552340Z 
+2026-09-16T13:06:00.3564311Z > Task :compileMcLauncherJava
+2026-09-16T13:06:00.3564976Z > Task :mcLauncherClasses
+2026-09-16T13:06:00.3565602Z > Task :packageMcLauncher
+2026-09-16T13:06:20.8573756Z 
+2026-09-16T13:06:20.8591694Z > Task :decompileSrgJar
+2026-09-16T13:06:20.8592045Z   Decompiling took 23427 ms
+2026-09-16T13:06:22.8551264Z 
+2026-09-16T13:06:22.8554634Z > Task :cleanupDecompSrgJar
+2026-09-16T13:06:22.8555386Z Fixup stage 1 - applying FF patches
+2026-09-16T13:06:23.2574360Z   Stage 1 took 2361 ms
+2026-09-16T13:06:23.2643724Z Fixup stage 2 - applying MCP patches
+2026-09-16T13:06:23.2673580Z   Stage 2 took 49 ms
+2026-09-16T13:06:23.2711407Z Fixup stage 3 - applying MCP cleanup
+2026-09-16T13:06:26.8552942Z   Stage 3 took 3561 ms
+2026-09-16T13:06:26.8553736Z Saving the fixed-up jar
+2026-09-16T13:06:27.8551494Z 
+2026-09-16T13:06:27.8557340Z > Task :patchDecompiledJar
+2026-09-16T13:06:27.8558314Z Patching sources: 2 patch archives, 2 injection directories
+2026-09-16T13:06:27.8559065Z Applied 311 patches
+2026-09-16T13:06:29.4553664Z 
+2026-09-16T13:06:29.4557983Z > Task :applyJST
+2026-09-16T13:06:30.9554819Z 
+2026-09-16T13:06:30.9555747Z > Task :remapDecompiledJar
+2026-09-16T13:06:30.9556412Z Applied 0 missing generics
+2026-09-16T13:06:31.5551396Z 
+2026-09-16T13:06:31.5552278Z > Task :decompressDecompiledSources
+2026-09-16T13:06:31.7551990Z > Task :processPatchedMcResources
+2026-09-16T13:06:38.6578386Z 
+2026-09-16T13:06:38.6664271Z Note: Some input files use or override a deprecated API.
+2026-09-16T13:06:38.6664885Z > Task :compilePatchedMcJava
+2026-09-16T13:06:38.6693896Z Note: Recompile with -Xlint:deprecation for details.
+2026-09-16T13:06:38.6724000Z Note: Some input files use unchecked or unsafe operations.
+2026-09-16T13:06:38.6783860Z Note: Recompile with -Xlint:unchecked for details.
+2026-09-16T13:06:39.6551482Z 
+2026-09-16T13:06:39.6581241Z > Task :patchedMcClasses
+2026-09-16T13:06:39.6583794Z > Task :compileApiJava NO-SOURCE
+2026-09-16T13:06:39.6584430Z > Task :apiClasses UP-TO-DATE
+2026-09-16T13:06:40.5551124Z 
+2026-09-16T13:06:40.5551738Z > Task :compileJava FAILED
+2026-09-16T13:06:40.5606630Z ##[error]/home/runner/work/FKCAC/FKCAC/src/main/java/com/fkcac/network/FKCACProtocolHandler.java:48: error: incompatible types: possible lossy conversion from int to byte
+2026-09-16T13:06:40.5616316Z         0x00, 0x00, 0x07, 0x24, 0x62, (byte) 0x84, 0xB6,
+2026-09-16T13:06:40.5616845Z                                                    ^
+2026-09-16T13:06:40.5618172Z ##[error]/home/runner/work/FKCAC/FKCAC/src/main/java/com/fkcac/network/FKCACProtocolHandler.java:79: error: cannot find symbol
+2026-09-16T13:06:40.5619814Z                     Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+2026-09-16T13:06:40.5620384Z                                             ^
+2026-09-16T13:06:40.5620944Z   symbol:   method addScheduledTask(<anonymous java.lang.Runnable>)
+2026-09-16T13:06:40.5621916Z   location: class net.minecraft.client.Minecraft
+2026-09-16T13:06:40.5622385Z 2 errors
+2026-09-16T13:06:40.6553817Z 
+2026-09-16T13:06:40.6560585Z FAILURE: Build failed with an exception.
+2026-09-16T13:06:40.6574163Z 
+2026-09-16T13:06:40.6583372Z > Task :packagePatchedMc
+2026-09-16T13:06:40.6637289Z gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1789563911440.json
+2026-09-16T13:06:40.6637865Z 
+2026-09-16T13:06:40.6638243Z [Incubating] Problems report is available at: file:///home/runner/work/FKCAC/FKCAC/build/reports/problems/problems-report.html
+2026-09-16T13:06:40.6638760Z 22 actionable tasks: 22 executed
+2026-09-16T13:06:40.6639051Z Configuration cache entry stored.
+2026-09-16T13:06:40.6639262Z 
+2026-09-16T13:06:40.6639358Z * What went wrong:
+2026-09-16T13:06:40.6639787Z Execution failed for task ':compileJava' (registered by plugin class 'org.gradle.api.plugins.JavaBasePlugin').
+2026-09-16T13:06:40.6640267Z > Compilation failed; see the compiler output below.
+2026-09-16T13:06:40.6641823Z ##[error]  /home/runner/work/FKCAC/FKCAC/src/main/java/com/fkcac/network/FKCACProtocolHandler.java:48: error: incompatible types: possible lossy conversion from int to byte
+2026-09-16T13:06:40.6643790Z           0x00, 0x00, 0x07, 0x24, 0x62, (byte) 0x84, 0xB6,
+2026-09-16T13:06:40.6644281Z                                                      ^
+2026-09-16T13:06:40.6644703Z   2 errors
+2026-09-16T13:06:40.6644877Z 
+2026-09-16T13:06:40.6645011Z * Try:
+2026-09-16T13:06:40.6645469Z > Check your code and dependencies to fix the compilation error(s)
+2026-09-16T13:06:40.6646185Z > Run with --scan to get full insights from a Build Scan (powered by Develocity).
+2026-09-16T13:06:40.6646636Z 
+2026-09-16T13:06:40.6646787Z * Exception is:
+2026-09-16T13:06:40.6647723Z org.gradle.api.tasks.TaskExecutionException: Execution failed for task ':compileJava' (registered by plugin class 'org.gradle.api.plugins.JavaBasePlugin').
+2026-09-16T13:06:40.6649293Z 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.lambda$executeIfValid$1(ExecuteActionsTaskExecuter.java:135)
+2026-09-16T13:06:40.6650406Z 	at org.gradle.internal.Try$Failure.ifSuccessfulOrElse(Try.java:288)
+2026-09-16T13:06:40.6651459Z 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeIfValid(ExecuteActionsTaskExecuter.java:133)
+2026-09-16T13:06:40.6652820Z 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.execute(ExecuteActionsTaskExecuter.java:121)
+2026-09-16T13:06:40.6654450Z 	at org.gradle.api.internal.tasks.execution.ProblemsTaskPathTrackingTaskExecuter.execute(ProblemsTaskPathTrackingTaskExecuter.java:41)
+2026-09-16T13:06:40.6655994Z 	at org.gradle.api.internal.tasks.execution.ResolveTaskExecutionModeExecuter.execute(ResolveTaskExecutionModeExecuter.java:51)
+2026-09-16T13:06:40.6657385Z 	at org.gradle.api.internal.tasks.execution.FinalizePropertiesTaskExecuter.execute(FinalizePropertiesTaskExecuter.java:46)
+2026-09-16T13:06:40.6658793Z 	at org.gradle.api.internal.tasks.execution.SkipTaskWithNoActionsExecuter.execute(SkipTaskWithNoActionsExecuter.java:57)
+2026-09-16T13:06:40.6660072Z 	at org.gradle.api.internal.tasks.execution.SkipOnlyIfTaskExecuter.execute(SkipOnlyIfTaskExecuter.java:74)
+2026-09-16T13:06:40.6661316Z 	at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:36)
+2026-09-16T13:06:40.6662596Z 	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.executeTask(EventFiringTaskExecuter.java:77)
+2026-09-16T13:06:40.6680872Z 	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.call(EventFiringTaskExecuter.java:55)
+2026-09-16T13:06:40.6682023Z 	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.call(EventFiringTaskExecuter.java:52)
+2026-09-16T13:06:40.6683311Z 	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:210)
+2026-09-16T13:06:40.6684814Z 	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:205)
+2026-09-16T13:06:40.6686013Z 	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:67)
+2026-09-16T13:06:40.6687130Z 	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:60)
+2026-09-16T13:06:40.6688214Z 	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:167)
+2026-09-16T13:06:40.6689308Z 	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:60)
+2026-09-16T13:06:40.6690391Z 	at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:54)
+2026-09-16T13:06:40.6691484Z 	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter.execute(EventFiringTaskExecuter.java:52)
+2026-09-16T13:06:40.6692543Z 	at org.gradle.execution.plan.DefaultNodeExecutor.executeLocalTaskNode(DefaultNodeExecutor.java:55)
+2026-09-16T13:06:40.6693693Z 	at org.gradle.execution.plan.DefaultNodeExecutor.execute(DefaultNodeExecutor.java:34)
+2026-09-16T13:06:40.6694984Z 	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$InvokeNodeExecutorsAction.execute(DefaultTaskExecutionGraph.java:355)
+2026-09-16T13:06:40.6696221Z 	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$InvokeNodeExecutorsAction.execute(DefaultTaskExecutionGraph.java:343)
+2026-09-16T13:06:40.6697674Z 	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.lambda$execute$0(DefaultTaskExecutionGraph.java:339)
+2026-09-16T13:06:40.6698938Z 	at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:84)
+2026-09-16T13:06:40.6700131Z 	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.execute(DefaultTaskExecutionGraph.java:339)
+2026-09-16T13:06:40.6701640Z 	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.execute(DefaultTaskExecutionGraph.java:328)
+2026-09-16T13:06:40.6702923Z 	at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.execute(DefaultPlanExecutor.java:459)
+2026-09-16T13:06:40.6714149Z 	at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.run(DefaultPlanExecutor.java:376)
+2026-09-16T13:06:40.6714815Z 	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
+2026-09-16T13:06:40.6715440Z 	at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:47)
+2026-09-16T13:06:40.6716146Z Caused by: org.gradle.api.internal.tasks.compile.CompilationFailedException: Compilation failed; see the compiler output below.
+2026-09-16T13:06:40.6717580Z ##[error]/home/runner/work/FKCAC/FKCAC/src/main/java/com/fkcac/network/FKCACProtocolHandler.java:48: error: incompatible types: possible lossy conversion from int to byte
+2026-09-16T13:06:40.6718720Z         0x00, 0x00, 0x07, 0x24, 0x62, (byte) 0x84, 0xB6,
+2026-09-16T13:06:40.6719039Z                                                    ^
+2026-09-16T13:06:40.6719808Z ##[error]/home/runner/work/FKCAC/FKCAC/src/main/java/com/fkcac/network/FKCACProtocolHandler.java:79: error: cannot find symbol
+2026-09-16T13:06:40.6720785Z                     Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+2026-09-16T13:06:40.6721132Z                                             ^
+2026-09-16T13:06:40.6721470Z   symbol:   method addScheduledTask(<anonymous java.lang.Runnable>)
+2026-09-16T13:06:40.6721838Z   location: class net.minecraft.client.Minecraft
+2026-09-16T13:06:40.6722116Z 2 errors
+2026-09-16T13:06:40.6722479Z 	at org.gradle.api.internal.tasks.compile.JdkJavaCompiler.execute(JdkJavaCompiler.java:89)
+2026-09-16T13:06:40.6723029Z 	at org.gradle.api.internal.tasks.compile.JdkJavaCompiler.execute(JdkJavaCompiler.java:50)
+2026-09-16T13:06:40.6723798Z 	at org.gradle.api.internal.tasks.compile.daemon.CompilerWorkAction.execute(CompilerWorkAction.java:52)
+2026-09-16T13:06:40.6724827Z 	at org.gradle.workers.internal.DefaultWorkerServer.execute(DefaultWorkerServer.java:68)
+2026-09-16T13:06:40.6725436Z 	at org.gradle.workers.internal.AbstractClassLoaderWorker$1.create(AbstractClassLoaderWorker.java:54)
+2026-09-16T13:06:40.6726053Z 	at org.gradle.workers.internal.AbstractClassLoaderWorker$1.create(AbstractClassLoaderWorker.java:48)
+2026-09-16T13:06:40.6726661Z 	at org.gradle.internal.classloader.ClassLoaderUtils.executeInClassloader(ClassLoaderUtils.java:102)
+2026-09-16T13:06:40.6727331Z 	at org.gradle.workers.internal.AbstractClassLoaderWorker.executeInClassLoader(AbstractClassLoaderWorker.java:48)
+2026-09-16T13:06:40.6727953Z 	at org.gradle.workers.internal.FlatClassLoaderWorker.run(FlatClassLoaderWorker.java:32)
+2026-09-16T13:06:40.6728508Z 	at org.gradle.workers.internal.FlatClassLoaderWorker.run(FlatClassLoaderWorker.java:22)
+2026-09-16T13:06:40.6729032Z 	at org.gradle.workers.internal.WorkerDaemonServer.run(WorkerDaemonServer.java:108)
+2026-09-16T13:06:40.6729537Z 	at org.gradle.workers.internal.WorkerDaemonServer.run(WorkerDaemonServer.java:77)
+2026-09-16T13:06:40.6730095Z 	at org.gradle.process.internal.worker.request.WorkerAction.lambda$run$1(WorkerAction.java:150)
+2026-09-16T13:06:40.6730934Z 	at org.gradle.process.internal.worker.child.WorkerLogEventListener.withWorkerLoggingProtocol(WorkerLogEventListener.java:41)
+2026-09-16T13:06:40.6731633Z 	at org.gradle.process.internal.worker.request.WorkerAction.lambda$run$2(WorkerAction.java:150)
+2026-09-16T13:06:40.6732236Z 	at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:84)
+2026-09-16T13:06:40.6732814Z 	at org.gradle.process.internal.worker.request.WorkerAction.run(WorkerAction.java:142)
+2026-09-16T13:06:40.6733534Z 	at org.gradle.internal.dispatch.MethodInvocation.invokeOn(MethodInvocation.java:77)
+2026-09-16T13:06:40.6734068Z 	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:28)
+2026-09-16T13:06:40.6734606Z 	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:19)
+2026-09-16T13:06:40.6735330Z 	at org.gradle.internal.remote.internal.hub.MessageHubBackedObjectConnection$DispatchWrapper.dispatch(MessageHubBackedObjectConnection.java:182)
+2026-09-16T13:06:40.6736219Z 	at org.gradle.internal.remote.internal.hub.MessageHubBackedObjectConnection$DispatchWrapper.dispatch(MessageHubBackedObjectConnection.java:164)
+2026-09-16T13:06:40.6736915Z 	at org.gradle.internal.remote.internal.hub.MessageHub$Handler.run(MessageHub.java:414)
+2026-09-16T13:06:40.6737306Z 	... 2 more
+2026-09-16T13:06:40.6737422Z 
+2026-09-16T13:06:40.6737427Z 
+2026-09-16T13:06:40.6737531Z BUILD FAILED in 1m 37s
+2026-09-16T13:06:41.0418488Z ##[error]Process completed with exit code 1.
+2026-09-16T13:06:41.0586276Z Post job cleanup.
+2026-09-16T13:06:41.3368076Z In post-action step
+2026-09-16T13:06:41.3375093Z Cache is read-only: will not save state for use in subsequent builds.
+2026-09-16T13:06:41.3380774Z Generating Job Summary
+2026-09-16T13:06:41.3407787Z Completed post-action step
+2026-09-16T13:06:41.3659261Z Post job cleanup.
+2026-09-16T13:06:41.4765244Z Post job cleanup.
+2026-09-16T13:06:41.5490126Z [command]/usr/bin/git version
+2026-09-16T13:06:41.5525280Z git version 2.55.0
+2026-09-16T13:06:41.5558061Z Temporarily overriding HOME='/home/runner/work/_temp/14c2ff9e-0622-4f20-926d-160a25afa9d3' before making global git config changes
+2026-09-16T13:06:41.5559147Z Adding repository directory to the temporary git global config as a safe directory
+2026-09-16T13:06:41.5562517Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/FKCAC/FKCAC
+2026-09-16T13:06:41.5593317Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-09-16T13:06:41.5622227Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-09-16T13:06:41.5840948Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-09-16T13:06:41.5865565Z http.https://github.com/.extraheader
+2026-09-16T13:06:41.5874847Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-09-16T13:06:41.5902462Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-09-16T13:06:41.6110645Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-09-16T13:06:41.6141060Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-09-16T13:06:41.6474441Z Cleaning up orphan processes
+2026-09-16T13:06:41.6760147Z Terminate orphan process: pid (2188) (java)
+2026-09-16T13:06:41.6784111Z Terminate orphan process: pid (2539) (java)
