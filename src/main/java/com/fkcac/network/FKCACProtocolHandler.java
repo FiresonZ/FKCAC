@@ -55,7 +55,7 @@ public final class FKCACProtocolHandler {
         }
     }
 
-    /** SPacketFileCheck (1) -> CPacketFileHash (5) with spoofed/short MD5 list */
+    /** SPacketFileCheck (1) -> CPacketFileHash (5) with a valid, allow-listed hash list */
     public static final class FileCheckHandler implements IMessageHandler<SPacketFileCheck, IMessage> {
         @Override
         public IMessage onMessage(SPacketFileCheck message, MessageContext ctx) {
@@ -66,14 +66,17 @@ public final class FKCACProtocolHandler {
         }
     }
 
-    /** SPacketClassCheck (2) -> CPacketClassFound (6) hiding every queried class */
+    /** SPacketClassCheck (2) -> CPacketClassFound (6): report the classes that really load */
     public static final class ClassCheckHandler implements IMessageHandler<SPacketClassCheck, IMessage> {
         @Override
         public IMessage onMessage(SPacketClassCheck message, MessageContext ctx) {
             if (ctx.side.isClient()) {
                 salt = SpoofConfig.refreshSalt(salt);
             }
-            return new CPacketClassFound(SpoofConfig.filterFoundClasses(message.getClassList()), salt);
+            // The server always includes a "marker" class it expects to be present (e.g.
+            // LaunchClassLoader), so it must be reported as found; absent cheat classes
+            // are naturally not reported. Mirrors the genuine client's CheckUtils.checkClass.
+            return new CPacketClassFound(ProtocolUtils.checkClass(message.getClassList()), salt);
         }
     }
 

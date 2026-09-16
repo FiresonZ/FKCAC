@@ -28,14 +28,18 @@ import org.apache.logging.log4j.Logger;
  * spoofed, client-controlled responses.
  *
  * <p>Usage note: the original CatAntiCheat client mod must be removed from {@code mods/}
- * before loading this one, otherwise FML will reject the duplicate "CatAntiCheat" channel.
+ * before loading this one. The {@code modid} deliberately stays {@code catanticheat} so
+ * the server-side join check (which requires the FML handshake mod-list to contain the
+ * key {@code catanticheat}) keeps the client whitelisted; shipping a second mod with
+ * that modid alongside the original would make FML reject the duplicate.
  */
 @Mod(modid = FKCAC.MODID, name = FKCAC.NAME, version = Tags.VERSION)
 public class FKCAC {
-    public static final String MODID = "fkcac";
+    /** Matches the original CatAntiCheat modid so the server-side join check passes. */
+    public static final String MODID = "catanticheat";
     public static final String NAME = "FKCAC";
 
-    /** CatAntiCheat client protocol version reported during the handshake. */
+    /** CatAntiCheat client protocol version reported during the handshake (server checks equality). */
     public static final int PROTOCOL_VERSION = 2;
 
     public static final Logger LOGGER = LogManager.getLogger(NAME);
