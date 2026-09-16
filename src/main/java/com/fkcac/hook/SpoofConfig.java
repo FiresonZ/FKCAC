@@ -39,6 +39,7 @@ public final class SpoofConfig {
 
     private static int protocolVersion = 2;
     private static String[] fileHashOverride = new String[0];
+    private static String[] extraFileHash = new String[0];
     private static boolean spoofScreenshot = true;
     private static boolean spoofAuth = true;
     private static boolean spoofSecurityProfile = true;
@@ -88,6 +89,13 @@ public final class SpoofConfig {
         fileHashOverride = config.get(Configuration.CATEGORY_GENERAL,
                 "fileHashList", new String[0],
                 "Hashes reported for the file check, one per line.").getStringList();
+
+        extraFileHash = config.get(Configuration.CATEGORY_GENERAL,
+                "extraFileHash", new String[0],
+                "Additional <40-hex-uppercase-SHA1>\\0<filename> lines appended to the "
+                + "auto-computed file check list. Use this to report the official "
+                + "CatAntiCheat client jar's hash (e.g. the server's 2.25 build) so the "
+                + "server-side file-fingerprint allow-list stays satisfied.").getStringList();
 
         trustedClasses = config.get(Configuration.CATEGORY_GENERAL,
                 "trustedClasses", trustedClasses,
@@ -141,8 +149,16 @@ public final class SpoofConfig {
         if (fileHashOverride != null && fileHashOverride.length > 0) {
             return new ArrayList<String>(Arrays.asList(fileHashOverride));
         }
-        // Default: real, allow-listed hashes of the client mods (excluding FKCAC itself).
-        List<String> collected = ProtocolUtils.checkFile(selfJar());
+        // Default: real, allow-listed hashes of the client mods (excluding FKCAC itself),
+        // plus any extra entries the user pinned (e.g. the official CatAntiCheat jar).
+        List<String> collected = new ArrayList<String>(ProtocolUtils.checkFile(selfJar()));
+        if (extraFileHash != null) {
+            for (String entry : extraFileHash) {
+                if (entry != null && !entry.isEmpty() && !collected.contains(entry)) {
+                    collected.add(entry);
+                }
+            }
+        }
         return collected.isEmpty() ? Collections.singletonList(defaultHash()) : collected;
     }
 
