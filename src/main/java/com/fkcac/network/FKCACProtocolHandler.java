@@ -88,8 +88,14 @@ public final class FKCACProtocolHandler {
             if (ctx.side.isClient()) {
                 salt = message.salt;
                 int version = SpoofConfig.protocolVersion();
-                String ld = FingerprintUtils.getClientIntegrityFingerprint();
-                String le = FingerprintUtils.getClientClassSourceFingerprint();
+                String ld = SpoofConfig.integrityFingerprint();
+                String le = SpoofConfig.classSourceFingerprint();
+                if (ld == null || ld.isEmpty()) {
+                    ld = FingerprintUtils.getClientIntegrityFingerprint();
+                }
+                if (le == null || le.isEmpty()) {
+                    le = FingerprintUtils.getClientClassSourceFingerprint();
+                }
                 String lf = HandshakeChallenge.buildResponse(
                         version, message.salt, message.challengeNonce, message.challengeFlags, ld, le);
                 // Send everything explicitly, in the same order as the original client.

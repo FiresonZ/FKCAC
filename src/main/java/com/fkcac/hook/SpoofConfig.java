@@ -42,6 +42,8 @@ public final class SpoofConfig {
     private static boolean spoofScreenshot = true;
     private static boolean spoofAuth = true;
     private static boolean spoofSecurityProfile = true;
+    private static String integrityFingerprint = "";
+    private static String classSourceFingerprint = "";
     private static String[] trustedClasses = {
         // The server's marker-class candidates (see FMLUtils.fmlClasses):
         "net.minecraft.launchwrapper.ITweaker",
@@ -91,6 +93,16 @@ public final class SpoofConfig {
                 "trustedClasses", trustedClasses,
                 "Classes reported as found on a class check; everything else is hidden.").getStringList();
 
+        integrityFingerprint = config.get(Configuration.CATEGORY_GENERAL,
+                "integrityFingerprint", "",
+                "ld override: 40-char uppercase hex. Empty = auto-compute with the "
+                + "original algorithm (use this to feed known-good fingerprints from the "
+                + "server's official client build after computing them).").getString();
+
+        classSourceFingerprint = config.get(Configuration.CATEGORY_GENERAL,
+                "classSourceFingerprint", "",
+                "le override: 40-char uppercase hex. Empty = auto-compute.").getString();
+
         config.save();
     }
 
@@ -112,6 +124,16 @@ public final class SpoofConfig {
     /** Whether to report a security profile after the handshake. */
     public static boolean spoofSecurityProfile() {
         return spoofSecurityProfile;
+    }
+
+    /** Nice fingerprint (ld) override; empty string = auto-compute. */
+    public static String integrityFingerprint() {
+        return integrityFingerprint;
+    }
+
+    /** Class-source fingerprint (le) override; empty string = auto-compute. */
+    public static String classSourceFingerprint() {
+        return classSourceFingerprint;
     }
 
     /** The hash list reported to the server on a file check. */
