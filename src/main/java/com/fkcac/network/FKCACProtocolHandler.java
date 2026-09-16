@@ -16,17 +16,25 @@ import com.fkcac.network.message.SPacketScreenshot;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import net.minecraft.client.Minecraft;
+
+import java.util.List;
 
 /**
  * Handlers for the "CatAntiCheat" plugin channel. Every server -> client request is
- * answered with a spoofed/regular client response so the server cannot tell that the
- * client has been modified.
+ * answered with a pristine-client response so the (frozen) CatAntiCheat-Public server
+ * plugin cannot tell the client has been modified:
  *
- * <p>This mirrors the protocol implemented by {@code luohuayu.anticheat} in
- * CatAntiCheat-Public so that this mod can act as a drop-in replacement for the
- * original CatAntiCheat client mod.
+ * <ul>
+ *   <li>handshake reports the protocol version and echoes the salt;</li>
+ *   <li>file check reports allow-listed real hashes (or a pinned list);</li>
+ *   <li>class check reports only the server's marker-class candidates as present;</li>
+ *   <li>screenshot is answered with a blank PNG;</li>
+ *   <li>the periodic data check reports pristine vanilla renderer flags.</li>
+ * </ul>
  */
 public final class FKCACProtocolHandler {
+    /** Salt issued by the server during the handshake; echoed back on later checks. */
     private static byte salt;
 
     /** 1x1 px valid PNG used as a fake "clean" screenshot. */
@@ -44,43 +52,57 @@ public final class FKCACProtocolHandler {
 
     private FKCACProtocolHandler() { }
 
-    /** SPacketHello (0) -> CPacketHelloReply (4) */
+    /** SPacketHello (0) -> CPacketHelloReply (4): handshake with protocol version + echoed salt. */
     public static final class HelloHandler implements IMessageHandler<SPacketHello, IMessage> {
         @Override
         public IMessage onMessage(SPacketHello message, MessageContext ctx) {
             if (ctx.side.isClient()) {
                 salt = message.salt;
             }
-            return new CPacketHelloReply(FKCAC.PROTOCOL_VERSION, message.salt);
+            return new CPacketHelloReply(SpoofConfig.protocolVersion(), message.salt);
         }
     }
 
-    /** SPacketFileCheck (1) -> CPacketFileHash (5) with a valid, allow-listed hash list */
+    /** SPacketFileCheck (1) -> CPacketFileHash (5): allow-listed hash list, computed off-thread. */
     public static final class FileCheckHandler implements IMessageHandler<SPacketFileCheck, IMessage> {
         @Override
-        public IMessage onMessage(SPacketFileCheck message, MessageContext ctx) {
+        public IMessage onMessage(final SPacketFileCheck message, final MessageContext ctx) {
             if (ctx.side.isClient()) {
                 salt = SpoofConfig.refreshSalt(salt);
             }
-            return new CPacketFileHash(SpoofConfig.fileHashList(), salt);
+            final byte checkSalt = salt;
+            // Mirror the real client: hashing the launch sources must not block the network thread.
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    final List<String> list = SpoofConfig.fileHashList();
+                    Minecraft.getMinecraft().addScheduledTask(new Runnable() {
+                        @Override
+                        public void run() {
+                            FKCAC.networkChannel.sendToServer(new CPacketFileHash(list, checkSalt));
+                        }
+                    });
+                }
+            }).start();
+            return null;
         }
     }
 
-    /** SPacketClassCheck (2) -> CPacketClassFound (6): report the classes that really load */
+    /** SPacketClassCheck (2) -> CPacketClassFound (6): only report the trusted marker classes. */
     public static final class ClassCheckHandler implements IMessageHandler<SPacketClassCheck, IMessage> {
         @Override
         public IMessage onMessage(SPacketClassCheck message, MessageContext ctx) {
             if (ctx.side.isClient()) {
                 salt = SpoofConfig.refreshSalt(salt);
             }
-            // The server always includes a "marker" class it expects to be present (e.g.
-            // LaunchClassLoader), so it must be reported as found; absent cheat classes
-            // are naturally not reported. Mirrors the genuine client's CheckUtils.checkClass.
-            return new CPacketClassFound(ProtocolUtils.checkClass(message.getClassList()), salt);
+            // The server only ever queries black-listed cheat classes plus one marker class it
+            // picks from a fixed candidate set; report exactly the trusted candidates as present
+            // and hide everything else.
+            return new CPacketClassFound(SpoofConfig.filterTrustedClasses(message.getClassList()), salt);
         }
     }
 
-    /** SPacketScreenshot (3) -> CPacketImageData (8) with a blank PNG */
+    /** SPacketScreenshot (3) -> CPacketImageData (8) with a blank PNG. */
     public static final class ScreenshotHandler implements IMessageHandler<SPacketScreenshot, IMessage> {
         @Override
         public IMessage onMessage(SPacketScreenshot message, MessageContext ctx) {
@@ -91,12 +113,13 @@ public final class FKCACProtocolHandler {
         }
     }
 
-    /** SPacketDataCheck (9) -> periodic re-check; report a healthy client */
+    /** SPacketDataCheck (9) -> CPacketVanillaData (10): report pristine renderer flags. */
     public static final class DataCheckHandler implements IMessageHandler<SPacketDataCheck, IMessage> {
         @Override
         public IMessage onMessage(SPacketDataCheck message, MessageContext ctx) {
-            // Report no injected classes and the vanilla renderer flags to stay whitelisted.
-            return new CPacketVanillaData(true, true);
+            // A clean client has gamma <= 1.5 (lighting=false) and no transparent texture pack
+            // (transparentTexture=false); neither server toggle can flag this.
+            return new CPacketVanillaData(false, false);
         }
     }
 

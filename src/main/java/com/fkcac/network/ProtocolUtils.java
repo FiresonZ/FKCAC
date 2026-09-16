@@ -16,44 +16,16 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Protocol-faithful helpers that mirror {@code luohuayu.anticheat.CheckUtils} from
- * CatAntiCheat-Public, so the replies FKCAC fabricates are indistinguishable from a
- * healthy client:
+ * Protocol-faithful helper that mirror {@code luohuayu.anticheat.CheckUtils} from
+ * CatAntiCheat-Public:
  *
- * <ul>
- *   <li>{@link #checkClass(List)} - reports exactly the queried classes that are
- *       actually loadable (the server always includes a "marker" class it expects to
- *       find, so it must be reported as present).</li>
- *   <li>{@link #checkFile(File)} - reports the real {@code SHA1\0filename} hashes of
- *       every launch source except FKCAC's own jar, keeping the count above the
- *       server's required minimum of 5 distinct entries.</li>
- * </ul>
+ * <p>{@link #checkFile(File)} reports the real {@code SHA1\0filename} hashes of every
+ * launch source except FKCAC's own jar, keeping the count above the server's required
+ * minimum of 5 distinct entries, so the file check reports exactly what a healthy
+ * client would report.
  */
 public final class ProtocolUtils {
     private ProtocolUtils() { }
-
-    /**
-     * Report which of the queried class names are actually loadable. Mirrors the real
-     * client's {@code CheckUtils.checkClass}.
-     */
-    public static List<String> checkClass(List<String> classList) {
-        List<String> foundClass = new ArrayList<String>();
-        if (classList == null) {
-            return foundClass;
-        }
-        for (String className : classList) {
-            try {
-                Class.forName(className);
-                foundClass.add(className);
-            } catch (ClassNotFoundException e) {
-                try {
-                    Class.forName(className, true, ClassLoader.getSystemClassLoader());
-                    foundClass.add(className);
-                } catch (ClassNotFoundException ignored) { }
-            }
-        }
-        return foundClass;
-    }
 
     /**
      * Compute the real launch-source hashes in the exact format the server expects

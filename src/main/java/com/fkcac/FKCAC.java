@@ -19,6 +19,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,13 +35,11 @@ import org.apache.logging.log4j.Logger;
  * that modid alongside the original would make FML reject the duplicate.
  */
 @Mod(modid = FKCAC.MODID, name = FKCAC.NAME, version = Tags.VERSION)
+@SideOnly(Side.CLIENT)
 public class FKCAC {
     /** Matches the original CatAntiCheat modid so the server-side join check passes. */
     public static final String MODID = "catanticheat";
     public static final String NAME = "FKCAC";
-
-    /** CatAntiCheat client protocol version reported during the handshake (server checks equality). */
-    public static final int PROTOCOL_VERSION = 2;
 
     public static final Logger LOGGER = LogManager.getLogger(NAME);
 
@@ -56,22 +55,22 @@ public class FKCAC {
         // Take over the channel that the server-side CatAntiCheat plugin expects.
         networkChannel = NetworkRegistry.INSTANCE.newSimpleChannel("CatAntiCheat");
 
-        // Server -> client requests (received on the client).
+        // Register in EXACTLY the same order and with the same discriminators as the
+        // original CatAntiCheatMod, so the encoded wire byte is identical regardless of
+        // whether FML derives it from the value or from the registration sequence.
         networkChannel.registerMessage(FKCACProtocolHandler.HelloHandler.class, SPacketHello.class, 0, Side.CLIENT);
         networkChannel.registerMessage(FKCACProtocolHandler.FileCheckHandler.class, SPacketFileCheck.class, 1, Side.CLIENT);
         networkChannel.registerMessage(FKCACProtocolHandler.ClassCheckHandler.class, SPacketClassCheck.class, 2, Side.CLIENT);
         networkChannel.registerMessage(FKCACProtocolHandler.ScreenshotHandler.class, SPacketScreenshot.class, 3, Side.CLIENT);
-        networkChannel.registerMessage(FKCACProtocolHandler.DataCheckHandler.class, SPacketDataCheck.class, 9, Side.CLIENT);
-
-        // Client -> server packets (registered on the server side so the wrapper knows the types).
         networkChannel.registerMessage(FKCACProtocolHandler.HelloReplyHandler.class, CPacketHelloReply.class, 4, Side.SERVER);
         networkChannel.registerMessage(FKCACProtocolHandler.FileHashHandler.class, CPacketFileHash.class, 5, Side.SERVER);
         networkChannel.registerMessage(FKCACProtocolHandler.ClassFoundHandler.class, CPacketClassFound.class, 6, Side.SERVER);
         networkChannel.registerMessage(FKCACProtocolHandler.InjectDetectHandler.class, CPacketInjectDetect.class, 7, Side.SERVER);
         networkChannel.registerMessage(FKCACProtocolHandler.ImageDataHandler.class, CPacketImageData.class, 8, Side.SERVER);
+        networkChannel.registerMessage(FKCACProtocolHandler.DataCheckHandler.class, SPacketDataCheck.class, 9, Side.CLIENT);
         networkChannel.registerMessage(FKCACProtocolHandler.VanillaDataHandler.class, CPacketVanillaData.class, 10, Side.SERVER);
 
-        LOGGER.info("FKCAC registered 'CatAntiCheat' channel (protocol {})", PROTOCOL_VERSION);
+        LOGGER.info("FKCAC registered 'CatAntiCheat' channel (protocol {})", SpoofConfig.protocolVersion());
     }
 
     @Mod.EventHandler
