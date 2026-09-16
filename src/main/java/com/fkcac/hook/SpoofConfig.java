@@ -25,6 +25,10 @@ import java.util.List;
  *       Defaults to the exact marker-class candidates the server picks from
  *       ({@code FMLUtils.fmlClasses}), so the server's marker is always reported present
  *       while any cheat/extra class is always reported absent.</li>
+ *   <li>{@code spoofAuth} - whether to actively respond to the auth challenge-response
+ *       protocol (discriminators 11–14). When enabled, FKCAC sends the client hello
+ *       automatically after the handshake and answers server challenges with a valid
+ *       SHA-1 digest computed from the hardcoded client salt.</li>
  * </ul>
  */
 public final class SpoofConfig {
@@ -33,6 +37,7 @@ public final class SpoofConfig {
     private static int protocolVersion = 2;
     private static String[] fileHashOverride = new String[0];
     private static boolean spoofScreenshot = true;
+    private static boolean spoofAuth = true;
     private static String[] trustedClasses = {
         // The server's marker-class candidates (see FMLUtils.fmlClasses):
         "net.minecraft.launchwrapper.ITweaker",
@@ -59,6 +64,11 @@ public final class SpoofConfig {
                 "spoofScreenshot", true,
                 "Whether to answer screenshot requests with a blank PNG.").getBoolean();
 
+        spoofAuth = config.get(Configuration.CATEGORY_GENERAL,
+                "spoofAuth", true,
+                "Whether to respond to the server auth challenge-response protocol "
+                + "(discriminators 11–14). Requires the hardcoded client salt to be valid.").getBoolean();
+
         config.setCategoryComment(Configuration.CATEGORY_GENERAL,
                 "FKCAC bypass behaviour. Each fileHashList entry is one line of "
                 + "<40-hex-uppercase-SHA1>\\0<filename>; leave empty to auto-report "
@@ -83,6 +93,11 @@ public final class SpoofConfig {
     /** Protocol version reported to the server during the handshake. */
     public static int protocolVersion() {
         return protocolVersion;
+    }
+
+    /** Whether to actively participate in the auth challenge-response protocol. */
+    public static boolean spoofAuth() {
+        return spoofAuth;
     }
 
     /** The hash list reported to the server on a file check. */

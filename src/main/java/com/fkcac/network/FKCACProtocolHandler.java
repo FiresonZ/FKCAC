@@ -2,12 +2,17 @@ package com.fkcac.network;
 
 import com.fkcac.FKCAC;
 import com.fkcac.hook.SpoofConfig;
+import com.fkcac.network.message.ClientAuthHelloPacket;
+import com.fkcac.network.message.ClientAuthResponsePacket;
 import com.fkcac.network.message.CPacketClassFound;
 import com.fkcac.network.message.CPacketFileHash;
 import com.fkcac.network.message.CPacketHelloReply;
 import com.fkcac.network.message.CPacketImageData;
 import com.fkcac.network.message.CPacketInjectDetect;
+import com.fkcac.network.message.CPacketSecurityProfile;
 import com.fkcac.network.message.CPacketVanillaData;
+import com.fkcac.network.message.ServerAuthChallengePacket;
+import com.fkcac.network.message.ServerAuthResultPacket;
 import com.fkcac.network.message.SPacketClassCheck;
 import com.fkcac.network.message.SPacketDataCheck;
 import com.fkcac.network.message.SPacketFileCheck;
@@ -27,12 +32,19 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
  *   <li>file check reports allow-listed real hashes (or a pinned list);</li>
  *   <li>class check reports only the server's marker-class candidates as present;</li>
  *   <li>screenshot is answered with a blank PNG;</li>
- *   <li>the periodic data check reports pristine vanilla renderer flags.</li>
+ *   <li>the periodic data check reports pristine vanilla renderer flags;</li>
+ *   <li>auth challenge is answered with a valid SHA-1 digest using the hardcoded client salt.</li>
  * </ul>
  */
 public final class FKCACProtocolHandler {
     /** Salt issued by the server during the handshake; echoed back on later checks. */
     private static byte salt;
+
+    /** CatAntiCheat hardcoded client identity string (from AuthController.buildClientId()). */
+    private static final String CLIENT_ID = "catanticheat-client";
+
+    /** CatAntiCheat hardcoded client salt (from AuthController.getClientSalt()). */
+    private static final String CLIENT_SALT = "NiuNiu-CAC-CLI-2026-H7p4Ds9Jx2Qm8Lv5Rk1T";
 
     /** 1x1 px valid PNG used as a fake "clean" screenshot. */
     private static final byte[] BLANK_PNG = {
@@ -49,14 +61,26 @@ public final class FKCACProtocolHandler {
 
     private FKCACProtocolHandler() { }
 
-    /** SPacketHello (0) -> CPacketHelloReply (4): handshake with protocol version + echoed salt. */
+    /** SPacketHello (0) -> CPacketHelloReply (4): handshake with protocol version, echoed salt, and three fingerprints.
+     *  Also sends {@link ClientAuthHelloPacket} (11) to the server on the client side to kick off auth. */
     public static final class HelloHandler implements IMessageHandler<SPacketHello, IMessage> {
         @Override
         public IMessage onMessage(SPacketHello message, MessageContext ctx) {
             if (ctx.side.isClient()) {
                 salt = message.salt;
+                // Kick off the auth protocol immediately after the handshake.
+                if (SpoofConfig.spoofAuth()) {
+                    FKCAC.networkChannel.sendToServer(new ClientAuthHelloPacket(CLIENT_ID));
+                }
             }
-            return new CPacketHelloReply(SpoofConfig.protocolVersion(), message.salt);
+            int version = SpoofConfig.protocolVersion();
+            String ld = FingerprintUtils.getClientIntegrityFingerprint();
+            String le = FingerprintUtils.getClientClassSourceFingerprint();
+            String lf = HandshakeChallenge.buildResponse(
+                    version, message.salt,
+                    message.challengeNonce, message.challengeFlags,
+                    ld, le);
+            return new CPacketHelloReply(version, message.salt, ld, le, lf);
         }
     }
 
@@ -162,6 +186,63 @@ public final class FKCACProtocolHandler {
     public static final class VanillaDataHandler implements IMessageHandler<CPacketVanillaData, IMessage> {
         @Override
         public IMessage onMessage(CPacketVanillaData message, MessageContext ctx) {
+            return null;
+        }
+    }
+
+    // ---- Auth protocol handlers (discriminators 11–14) ----
+
+    /** Client sends ClientAuthHelloPacket (11) to S — announces client identity before challenge. */
+    public static final class AuthHelloHandler implements IMessageHandler<ClientAuthHelloPacket, IMessage> {
+        @Override
+        public IMessage onMessage(ClientAuthHelloPacket message, MessageContext ctx) {
+            // No response expected from the server; this is just the client announcing itself.
+            return null;
+        }
+    }
+
+    /** Server sends ServerAuthChallengePacket (12) to C — challenge string to sign. */
+    public static final class AuthChallengeHandler implements IMessageHandler<ServerAuthChallengePacket, IMessage> {
+        @Override
+        public IMessage onMessage(ServerAuthChallengePacket message, MessageContext ctx) {
+            if (ctx.side.isClient()) {
+                String challenge = message.challenge;
+                String response = AuthCryptoUtil.buildResponse(CLIENT_ID, CLIENT_SALT, challenge);
+                FKCAC.networkChannel.sendToServer(
+                        new ClientAuthResponsePacket(CLIENT_ID, CLIENT_SALT, response));
+            }
+            return null;
+        }
+    }
+
+    /** Client sends ClientAuthResponsePacket (13) to S — signed challenge response. */
+    public static final class AuthResponseHandler implements IMessageHandler<ClientAuthResponsePacket, IMessage> {
+        @Override
+        public IMessage onMessage(ClientAuthResponsePacket message, MessageContext ctx) {
+            return null;
+        }
+    }
+
+    /** Server sends ServerAuthResultPacket (14) to C — whether the client passed auth. */
+    public static final class AuthResultHandler implements IMessageHandler<ServerAuthResultPacket, IMessage> {
+        @Override
+        public IMessage onMessage(ServerAuthResultPacket message, MessageContext ctx) {
+            if (ctx.side.isClient()) {
+                if (message.authorized) {
+                    FKCAC.LOGGER.info("FKCAC: Auth result = AUTHORIZED");
+                } else {
+                    FKCAC.LOGGER.warn("FKCAC: Auth result = DENIED — reason: {}", message.result);
+                }
+            }
+            return null;
+        }
+    }
+
+    // ---- CPacketSecurityProfile (15) — empty handler; never sent by the server in practice ----
+    /** CPacketSecurityProfile (15) */
+    public static final class SecurityProfileHandler implements IMessageHandler<CPacketSecurityProfile, IMessage> {
+        @Override
+        public IMessage onMessage(CPacketSecurityProfile message, MessageContext ctx) {
             return null;
         }
     }
