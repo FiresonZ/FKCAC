@@ -1,9 +1,19 @@
 name: Build & Release
 
-# 手动触发：仅在仓库 Actions 页手动点击运行时才构建。
-# 若在某 tag 上手动触发，则额外为该 tag 创建 GitHub Release 并附带 Mod 文件。
+# 纯手动触发：在仓库 Actions 页手动运行。
+# 填写版本号后构建；勾选"发布"则额外生成对应版本的 GitHub Release。
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: '版本号 (例如 1.1.0)'
+        required: true
+        type: string
+      publish:
+        description: '构建成功后发布 GitHub Release'
+        required: false
+        default: false
+        type: boolean
 
 env:
   GRADLE_OPTS: -Dorg.gradle.console=plain
@@ -16,10 +26,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Set up JDK
+      # Gradle 9.x 需要 JVM 17+ 来运行；编译 1.7.10 mod 所用的是 Java 8 工具链
+      # （由 foojay 自动下载供应），两者互不冲突。
+      - name: Set up JDK 17
         uses: actions/setup-java@v5
         with:
-          java-version: '8'
+          java-version: '17'
           distribution: 'temurin'
 
       - name: Setup Gradle
@@ -31,7 +43,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew build --stacktrace
+        run: ./gradlew build -PmodVersion="${{ inputs.version }}" --stacktrace
 
       - name: Upload build outputs
         uses: actions/upload-artifact@v4
@@ -42,16 +54,13 @@ jobs:
           if-no-files-found: error
 
   release:
-    name: Create GitHub Release
+    name: Publish GitHub Release
     needs: build
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: inputs.publish
     runs-on: ubuntu-24.04
     permissions:
       contents: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-
       - name: Download build outputs
         uses: actions/download-artifact@v4
         with:
@@ -61,5 +70,9 @@ jobs:
       - name: Publish release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: v${{ inputs.version }}
+          name: FKCAC v${{ inputs.version }}
+          body: |
+            FKCAC ${{ inputs.version }} (Minecraft 1.7.10 / Forge)
           generate_release_notes: true
           files: dist/**/*.jar

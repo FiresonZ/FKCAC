@@ -48,10 +48,16 @@ FKCAC 会接管特定反作弊插件所使用的通讯通道，并以“纯净�
 ## 构建
 
 ```bash
-./gradlew build      # 产物在 build/libs/
+./gradlew build            # 使用默认版本
+./gradlew build -PmodVersion=1.2.0   # 指定版本
+# 产物在 build/libs/
 ```
 
-CI 工作流（`.github/workflows/build.yml`）为**纯手动触发**：在仓库 Actions 页手动运行即可；若在 `v*` tag 上触发，还会额外创建对应的 GitHub Release。
+CI 工作流（`.github/workflows/build.yml`，`Minecraft 1.7.10 / Forge`）为**纯手动触发**：
+
+1. 在仓库 **Actions** 页手动运行。
+2. 填写**版本号**。
+3. 如需发布，勾选**「发布」**——构建成功后会自动生成对应版本的 GitHub Release 并附带 Mod 文件。
 
 ---
 

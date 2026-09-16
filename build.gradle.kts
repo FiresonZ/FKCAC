@@ -5,7 +5,8 @@ plugins {
 
 // Project properties
 group = "com.fkcac"
-version = "1.1.0"
+// CI 通过 -PmodVersion=... 覆盖；本地默认为 1.1.0
+version = project.findProperty("modVersion") as? String ?: "1.1.0"
 
 // Decouple the JVM Gradle runs under from the one used to compile / run the mod (1.7.10 needs Java 8)
 java {
