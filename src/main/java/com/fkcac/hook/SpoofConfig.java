@@ -29,6 +29,9 @@ import java.util.List;
  *       protocol (discriminators 11–14). When enabled, FKCAC sends the client hello
  *       automatically after the handshake and answers server challenges with a valid
  *       SHA-1 digest computed from the hardcoded client salt.</li>
+ *   <li>{@code spoofSecurityProfile} - whether to report a (structurally valid, neutral)
+ *       security profile (discriminator 15) right after the handshake like the real
+ *       client does.</li>
  * </ul>
  */
 public final class SpoofConfig {
@@ -38,6 +41,7 @@ public final class SpoofConfig {
     private static String[] fileHashOverride = new String[0];
     private static boolean spoofScreenshot = true;
     private static boolean spoofAuth = true;
+    private static boolean spoofSecurityProfile = true;
     private static String[] trustedClasses = {
         // The server's marker-class candidates (see FMLUtils.fmlClasses):
         "net.minecraft.launchwrapper.ITweaker",
@@ -69,6 +73,11 @@ public final class SpoofConfig {
                 "Whether to respond to the server auth challenge-response protocol "
                 + "(discriminators 11–14). Requires the hardcoded client salt to be valid.").getBoolean();
 
+        spoofSecurityProfile = config.get(Configuration.CATEGORY_GENERAL,
+                "spoofSecurityProfile", true,
+                "Whether to report a neutral security profile (discriminator 15) right "
+                + "after the handshake, like the real CatAntiCheat client does.").getBoolean();
+
         config.setCategoryComment(Configuration.CATEGORY_GENERAL,
                 "FKCAC bypass behaviour. Each fileHashList entry is one line of "
                 + "<40-hex-uppercase-SHA1>\\0<filename>; leave empty to auto-report "
@@ -98,6 +107,11 @@ public final class SpoofConfig {
     /** Whether to actively participate in the auth challenge-response protocol. */
     public static boolean spoofAuth() {
         return spoofAuth;
+    }
+
+    /** Whether to report a security profile after the handshake. */
+    public static boolean spoofSecurityProfile() {
+        return spoofSecurityProfile;
     }
 
     /** The hash list reported to the server on a file check. */

@@ -1,0 +1,36 @@
+Compiled from "ClientAuthHelloPacket.java"
+public class luohuayu.anticheat.auth.packet.ClientAuthHelloPacket implements cpw.mods.fml.common.network.simpleimpl.IMessage {
+  private java.lang.String kZ;
+
+  public luohuayu.anticheat.auth.packet.ClientAuthHelloPacket();
+    Code:
+         0: aload_0
+         1: invokespecial #9                  // Method java/lang/Object."<init>":()V
+         4: return
+
+  public luohuayu.anticheat.auth.packet.ClientAuthHelloPacket(java.lang.String);
+    Code:
+         0: aload_0
+         1: invokespecial #9                  // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: aload_1
+         6: putfield      #8                  // Field kZ:Ljava/lang/String;
+         9: return
+
+  public void fromBytes(io.netty.buffer.ByteBuf);
+    Code:
+         0: return
+
+  public void toBytes(io.netty.buffer.ByteBuf);
+    Code:
+         0: aload_1
+         1: aload_0
+         2: getfield      #8                  // Field kZ:Ljava/lang/String;
+         5: ifnonnull     13
+         8: ldc           #1                  // String
+        10: goto          17
+        13: aload_0
+        14: getfield      #8                  // Field kZ:Ljava/lang/String;
+        17: invokestatic  #10                 // Method luohuayu/anticheat/a.a:(Lio/netty/buffer/ByteBuf;Ljava/lang/String;)V
+        20: return
+}

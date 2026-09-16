@@ -1,0 +1,93 @@
+Compiled from "AuthCryptoUtil.java"
+public class luohuayu.anticheat.auth.AuthCryptoUtil {
+  public luohuayu.anticheat.auth.AuthCryptoUtil();
+    Code:
+         0: aload_0
+         1: invokespecial #17                 // Method java/lang/Object."<init>":()V
+         4: return
+
+  public static java.lang.String buildResponse(java.lang.String, java.lang.String, java.lang.String);
+    Code:
+         0: ldc           #5                  // String response
+         2: aload_0
+         3: aload_1
+         4: aload_2
+         5: invokestatic  #27                 // Method a:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+         8: areturn
+
+  private static java.lang.String a(java.lang.String, java.lang.String, java.lang.String, java.lang.String);
+    Code:
+         0: ldc           #4                  // String SHA-1
+         2: invokestatic  #24                 // Method java/security/MessageDigest.getInstance:(Ljava/lang/String;)Ljava/security/MessageDigest;
+         5: astore        4
+         7: aload         4
+         9: aload_0
+        10: invokestatic  #28                 // Method a:(Ljava/security/MessageDigest;Ljava/lang/String;)V
+        13: aload         4
+        15: aload_1
+        16: invokestatic  #28                 // Method a:(Ljava/security/MessageDigest;Ljava/lang/String;)V
+        19: aload         4
+        21: aload_2
+        22: invokestatic  #28                 // Method a:(Ljava/security/MessageDigest;Ljava/lang/String;)V
+        25: aload         4
+        27: aload_3
+        28: invokestatic  #28                 // Method a:(Ljava/security/MessageDigest;Ljava/lang/String;)V
+        31: new           #11                 // class java/lang/StringBuilder
+        34: dup
+        35: invokespecial #20                 // Method java/lang/StringBuilder."<init>":()V
+        38: astore        5
+        40: aload         4
+        42: invokevirtual #23                 // Method java/security/MessageDigest.digest:()[B
+        45: astore        6
+        47: aload         6
+        49: arraylength
+        50: istore        7
+        52: iconst_0
+        53: istore        8
+        55: iload         8
+        57: iload         7
+        59: if_icmpge     98
+        62: aload         6
+        64: iload         8
+        66: baload
+        67: istore        9
+        69: aload         5
+        71: ldc           #2                  // String %02X
+        73: iconst_1
+        74: anewarray     #9                  // class java/lang/Object
+        77: dup
+        78: iconst_0
+        79: iload         9
+        81: invokestatic  #16                 // Method java/lang/Byte.valueOf:(B)Ljava/lang/Byte;
+        84: aastore
+        85: invokestatic  #18                 // Method java/lang/String.format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+        88: invokevirtual #21                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        91: pop
+        92: iinc          8, 1
+        95: goto          55
+        98: aload         5
+       100: invokevirtual #22                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+       103: areturn
+       104: astore        4
+       106: ldc           #3                  // String ERROR
+       108: areturn
+      Exception table:
+         from    to  target type
+             0   103   104   Class java/lang/Exception
+
+  private static void a(java.security.MessageDigest, java.lang.String);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: ifnonnull     10
+         5: ldc           #1                  // String
+         7: goto          11
+        10: aload_1
+        11: getstatic     #15                 // Field java/nio/charset/StandardCharsets.UTF_8:Ljava/nio/charset/Charset;
+        14: invokevirtual #19                 // Method java/lang/String.getBytes:(Ljava/nio/charset/Charset;)[B
+        17: invokevirtual #26                 // Method java/security/MessageDigest.update:([B)V
+        20: aload_0
+        21: iconst_m1
+        22: invokevirtual #25                 // Method java/security/MessageDigest.update:(B)V
+        25: return
+}

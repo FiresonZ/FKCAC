@@ -1,0 +1,48 @@
+Compiled from "CPacketInjectDetect.java"
+public class luohuayu.anticheat.message.CPacketInjectDetect implements cpw.mods.fml.common.network.simpleimpl.IMessage {
+  public java.util.List<java.lang.String> foundClassList;
+
+  public luohuayu.anticheat.message.CPacketInjectDetect();
+    Code:
+         0: aload_0
+         1: invokespecial #12                 // Method java/lang/Object."<init>":()V
+         4: return
+
+  public luohuayu.anticheat.message.CPacketInjectDetect(java.util.List<java.lang.String>);
+    Code:
+         0: aload_0
+         1: invokespecial #12                 // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: aload_1
+         6: putfield      #9                  // Field foundClassList:Ljava/util/List;
+         9: return
+
+  public void fromBytes(io.netty.buffer.ByteBuf);
+    Code:
+         0: return
+
+  public void toBytes(io.netty.buffer.ByteBuf);
+    Code:
+         0: aload_1
+         1: aload_0
+         2: getfield      #9                  // Field foundClassList:Ljava/util/List;
+         5: invokeinterface #16,  1           // InterfaceMethod java/util/List.size:()I
+        10: invokevirtual #11                 // Method io/netty/buffer/ByteBuf.writeShort:(I)Lio/netty/buffer/ByteBuf;
+        13: pop
+        14: aload_0
+        15: getfield      #9                  // Field foundClassList:Ljava/util/List;
+        18: invokeinterface #15,  1           // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+        23: astore_2
+        24: aload_2
+        25: invokeinterface #13,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+        30: ifeq          51
+        33: aload_2
+        34: invokeinterface #14,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        39: checkcast     #5                  // class java/lang/String
+        42: astore_3
+        43: aload_1
+        44: aload_3
+        45: invokestatic  #10                 // Method cpw/mods/fml/common/network/ByteBufUtils.writeUTF8String:(Lio/netty/buffer/ByteBuf;Ljava/lang/String;)V
+        48: goto          24
+        51: return
+}

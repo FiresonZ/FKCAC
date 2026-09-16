@@ -1,0 +1,58 @@
+Compiled from "CPacketClassFound.java"
+public class luohuayu.anticheat.message.CPacketClassFound implements cpw.mods.fml.common.network.simpleimpl.IMessage {
+  private java.util.List<java.lang.String> foundClassList;
+
+  private byte salt;
+
+  public luohuayu.anticheat.message.CPacketClassFound();
+    Code:
+         0: aload_0
+         1: invokespecial #14                 // Method java/lang/Object."<init>":()V
+         4: return
+
+  public luohuayu.anticheat.message.CPacketClassFound(java.util.List<java.lang.String>, byte);
+    Code:
+         0: aload_0
+         1: invokespecial #14                 // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: aload_1
+         6: putfield      #9                  // Field foundClassList:Ljava/util/List;
+         9: aload_0
+        10: iload_2
+        11: putfield      #10                 // Field salt:B
+        14: return
+
+  public void fromBytes(io.netty.buffer.ByteBuf);
+    Code:
+         0: return
+
+  public void toBytes(io.netty.buffer.ByteBuf);
+    Code:
+         0: aload_1
+         1: aload_0
+         2: getfield      #9                  // Field foundClassList:Ljava/util/List;
+         5: invokeinterface #18,  1           // InterfaceMethod java/util/List.size:()I
+        10: invokevirtual #13                 // Method io/netty/buffer/ByteBuf.writeShort:(I)Lio/netty/buffer/ByteBuf;
+        13: pop
+        14: aload_0
+        15: getfield      #9                  // Field foundClassList:Ljava/util/List;
+        18: invokeinterface #17,  1           // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+        23: astore_2
+        24: aload_2
+        25: invokeinterface #15,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+        30: ifeq          51
+        33: aload_2
+        34: invokeinterface #16,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        39: checkcast     #5                  // class java/lang/String
+        42: astore_3
+        43: aload_1
+        44: aload_3
+        45: invokestatic  #11                 // Method cpw/mods/fml/common/network/ByteBufUtils.writeUTF8String:(Lio/netty/buffer/ByteBuf;Ljava/lang/String;)V
+        48: goto          24
+        51: aload_1
+        52: aload_0
+        53: getfield      #10                 // Field salt:B
+        56: invokevirtual #12                 // Method io/netty/buffer/ByteBuf.writeByte:(I)Lio/netty/buffer/ByteBuf;
+        59: pop
+        60: return
+}

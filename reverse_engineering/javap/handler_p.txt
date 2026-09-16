@@ -1,0 +1,27 @@
+Compiled from "AntiCheatPacketMessageHandler.java"
+public class luohuayu.anticheat.AntiCheatPacketMessageHandler$p implements cpw.mods.fml.common.network.simpleimpl.IMessageHandler<luohuayu.anticheat.auth.packet.ServerAuthResultPacket, cpw.mods.fml.common.network.simpleimpl.IMessage> {
+  public luohuayu.anticheat.AntiCheatPacketMessageHandler$p();
+    Code:
+         0: aload_0
+         1: invokespecial #9                  // Method java/lang/Object."<init>":()V
+         4: return
+
+  public cpw.mods.fml.common.network.simpleimpl.IMessage onMessage(luohuayu.anticheat.auth.packet.ServerAuthResultPacket, cpw.mods.fml.common.network.simpleimpl.MessageContext);
+    Code:
+         0: aload_1
+         1: getfield      #7                  // Field luohuayu/anticheat/auth/packet/ServerAuthResultPacket.authorized:Z
+         4: aload_1
+         5: getfield      #8                  // Field luohuayu/anticheat/auth/packet/ServerAuthResultPacket.result:Ljava/lang/String;
+         8: invokestatic  #11                 // Method luohuayu/anticheat/auth/AuthController.onResult:(ZLjava/lang/String;)V
+        11: aconst_null
+        12: areturn
+
+  public cpw.mods.fml.common.network.simpleimpl.IMessage onMessage(cpw.mods.fml.common.network.simpleimpl.IMessage, cpw.mods.fml.common.network.simpleimpl.MessageContext);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: checkcast     #6                  // class luohuayu/anticheat/auth/packet/ServerAuthResultPacket
+         5: aload_2
+         6: invokevirtual #10                 // Method onMessage:(Lluohuayu/anticheat/auth/packet/ServerAuthResultPacket;Lcpw/mods/fml/common/network/simpleimpl/MessageContext;)Lcpw/mods/fml/common/network/simpleimpl/IMessage;
+         9: areturn
+}

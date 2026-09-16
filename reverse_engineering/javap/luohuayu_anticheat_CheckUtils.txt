@@ -1,0 +1,618 @@
+Compiled from "CheckUtils.java"
+public class luohuayu.anticheat.CheckUtils {
+  private static final java.util.List<java.lang.String> ky;
+
+  private static final java.util.List<java.lang.String> kz;
+
+  public luohuayu.anticheat.CheckUtils();
+    Code:
+         0: aload_0
+         1: invokespecial #85                 // Method java/lang/Object."<init>":()V
+         4: return
+
+  public static java.util.List<java.lang.String> checkClass(java.util.List<java.lang.String>);
+    Code:
+         0: new           #53                 // class java/util/ArrayList
+         3: dup
+         4: invokespecial #107                // Method java/util/ArrayList."<init>":()V
+         7: astore_1
+         8: aload_0
+         9: invokeinterface #127,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+        14: astore_2
+        15: aload_2
+        16: invokeinterface #124,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+        21: ifeq          77
+        24: aload_2
+        25: invokeinterface #125,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        30: checkcast     #42                 // class java/lang/String
+        33: astore_3
+        34: aload_3
+        35: invokestatic  #78                 // Method java/lang/Class.forName:(Ljava/lang/String;)Ljava/lang/Class;
+        38: pop
+        39: aload_1
+        40: aload_3
+        41: invokeinterface #126,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+        46: pop
+        47: goto          74
+        50: astore        4
+        52: aload_3
+        53: iconst_1
+        54: invokestatic  #84                 // Method java/lang/ClassLoader.getSystemClassLoader:()Ljava/lang/ClassLoader;
+        57: invokestatic  #79                 // Method java/lang/Class.forName:(Ljava/lang/String;ZLjava/lang/ClassLoader;)Ljava/lang/Class;
+        60: pop
+        61: aload_1
+        62: aload_3
+        63: invokeinterface #126,  2          // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+        68: pop
+        69: goto          74
+        72: astore        5
+        74: goto          15
+        77: aload_1
+        78: areturn
+      Exception table:
+         from    to  target type
+            34    47    50   Class java/lang/ClassNotFoundException
+            52    69    72   Class java/lang/ClassNotFoundException
+
+  public static java.util.Set<java.lang.String> checkFile();
+    Code:
+         0: new           #55                 // class java/util/HashSet
+         3: dup
+         4: invokespecial #109                // Method java/util/HashSet."<init>":()V
+         7: astore_0
+         8: ldc           #61                 // class luohuayu/anticheat/CheckUtils
+        10: invokevirtual #80                 // Method java/lang/Class.getClassLoader:()Ljava/lang/ClassLoader;
+        13: checkcast     #64                 // class net/minecraft/launchwrapper/LaunchClassLoader
+        16: astore_1
+        17: aload_1
+        18: invokevirtual #123                // Method net/minecraft/launchwrapper/LaunchClassLoader.getSources:()Ljava/util/List;
+        21: invokeinterface #127,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+        26: astore_2
+        27: aload_2
+        28: invokeinterface #124,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+        33: ifeq          69
+        36: aload_2
+        37: invokeinterface #125,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        42: checkcast     #47                 // class java/net/URL
+        45: astore_3
+        46: aload_3
+        47: invokestatic  #115                // Method a:(Ljava/net/URL;)Ljava/lang/String;
+        50: astore        4
+        52: aload         4
+        54: ifnull        66
+        57: aload_0
+        58: aload         4
+        60: invokeinterface #128,  2          // InterfaceMethod java/util/Set.add:(Ljava/lang/Object;)Z
+        65: pop
+        66: goto          27
+        69: aload_0
+        70: areturn
+
+  public static byte[] screenshot();
+    Code:
+         0: new           #31                 // class java/io/ByteArrayOutputStream
+         3: dup
+         4: invokespecial #70                 // Method java/io/ByteArrayOutputStream."<init>":()V
+         7: astore_0
+         8: new           #59                 // class java/util/zip/GZIPOutputStream
+        11: dup
+        12: aload_0
+        13: invokespecial #110                // Method java/util/zip/GZIPOutputStream."<init>":(Ljava/io/OutputStream;)V
+        16: astore_1
+        17: invokestatic  #122                // Method net/minecraft/client/Minecraft.func_71410_x:()Lnet/minecraft/client/Minecraft;
+        20: getfield      #69                 // Field net/minecraft/client/Minecraft.field_71443_c:I
+        23: invokestatic  #122                // Method net/minecraft/client/Minecraft.func_71410_x:()Lnet/minecraft/client/Minecraft;
+        26: getfield      #68                 // Field net/minecraft/client/Minecraft.field_71440_d:I
+        29: invokestatic  #122                // Method net/minecraft/client/Minecraft.func_71410_x:()Lnet/minecraft/client/Minecraft;
+        32: invokevirtual #121                // Method net/minecraft/client/Minecraft.func_147110_a:()Lnet/minecraft/client/shader/Framebuffer;
+        35: invokestatic  #120                // Method luohuayu/anticheat/OpenGLHelper.createScreenshot:(IILnet/minecraft/client/shader/Framebuffer;)Ljava/awt/image/BufferedImage;
+        38: astore_2
+        39: aload_2
+        40: ldc           #25                 // String png
+        42: aload_1
+        43: invokestatic  #113                // Method javax/imageio/ImageIO.write:(Ljava/awt/image/RenderedImage;Ljava/lang/String;Ljava/io/OutputStream;)Z
+        46: pop
+        47: aload_1
+        48: invokevirtual #112                // Method java/util/zip/GZIPOutputStream.flush:()V
+        51: aload_1
+        52: invokevirtual #111                // Method java/util/zip/GZIPOutputStream.close:()V
+        55: goto          59
+        58: astore_1
+        59: aload_0
+        60: invokevirtual #71                 // Method java/io/ByteArrayOutputStream.toByteArray:()[B
+        63: areturn
+      Exception table:
+         from    to  target type
+             8    55    58   Class java/lang/Exception
+
+  public static java.lang.String getClientIntegrityFingerprint();
+    Code:
+         0: ldc           #11                 // String SHA-1
+         2: invokestatic  #103                // Method java/security/MessageDigest.getInstance:(Ljava/lang/String;)Ljava/security/MessageDigest;
+         5: astore_0
+         6: getstatic     #66                 // Field ky:Ljava/util/List;
+         9: invokeinterface #127,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+        14: astore_1
+        15: aload_1
+        16: invokeinterface #124,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+        21: ifeq          196
+        24: aload_1
+        25: invokeinterface #125,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        30: checkcast     #42                 // class java/lang/String
+        33: astore_2
+        34: aload_0
+        35: aload_2
+        36: ldc           #13                 // String UTF-8
+        38: invokevirtual #89                 // Method java/lang/String.getBytes:(Ljava/lang/String;)[B
+        41: invokevirtual #104                // Method java/security/MessageDigest.update:([B)V
+        44: ldc           #61                 // class luohuayu/anticheat/CheckUtils
+        46: aload_2
+        47: invokevirtual #83                 // Method java/lang/Class.getResourceAsStream:(Ljava/lang/String;)Ljava/io/InputStream;
+        50: astore_3
+        51: aconst_null
+        52: astore        4
+        54: aload_3
+        55: ifnonnull     104
+        58: aload_0
+        59: ldc           #24                 // String missing
+        61: ldc           #13                 // String UTF-8
+        63: invokevirtual #89                 // Method java/lang/String.getBytes:(Ljava/lang/String;)[B
+        66: invokevirtual #104                // Method java/security/MessageDigest.update:([B)V
+        69: aload_3
+        70: ifnull        15
+        73: aload         4
+        75: ifnull        97
+        78: aload_3
+        79: invokevirtual #75                 // Method java/io/InputStream.close:()V
+        82: goto          15
+        85: astore        5
+        87: aload         4
+        89: aload         5
+        91: invokevirtual #96                 // Method java/lang/Throwable.addSuppressed:(Ljava/lang/Throwable;)V
+        94: goto          15
+        97: aload_3
+        98: invokevirtual #75                 // Method java/io/InputStream.close:()V
+       101: goto          15
+       104: aload_0
+       105: aload_3
+       106: invokestatic  #117                // Method b:(Ljava/io/InputStream;)[B
+       109: invokevirtual #104                // Method java/security/MessageDigest.update:([B)V
+       112: aload_3
+       113: ifnull        193
+       116: aload         4
+       118: ifnull        140
+       121: aload_3
+       122: invokevirtual #75                 // Method java/io/InputStream.close:()V
+       125: goto          193
+       128: astore        5
+       130: aload         4
+       132: aload         5
+       134: invokevirtual #96                 // Method java/lang/Throwable.addSuppressed:(Ljava/lang/Throwable;)V
+       137: goto          193
+       140: aload_3
+       141: invokevirtual #75                 // Method java/io/InputStream.close:()V
+       144: goto          193
+       147: astore        5
+       149: aload         5
+       151: astore        4
+       153: aload         5
+       155: athrow
+       156: astore        6
+       158: aload_3
+       159: ifnull        190
+       162: aload         4
+       164: ifnull        186
+       167: aload_3
+       168: invokevirtual #75                 // Method java/io/InputStream.close:()V
+       171: goto          190
+       174: astore        7
+       176: aload         4
+       178: aload         7
+       180: invokevirtual #96                 // Method java/lang/Throwable.addSuppressed:(Ljava/lang/Throwable;)V
+       183: goto          190
+       186: aload_3
+       187: invokevirtual #75                 // Method java/io/InputStream.close:()V
+       190: aload         6
+       192: athrow
+       193: goto          15
+       196: aload_0
+       197: invokevirtual #102                // Method java/security/MessageDigest.digest:()[B
+       200: invokestatic  #116                // Method a:([B)Ljava/lang/String;
+       203: areturn
+       204: astore_0
+       205: ldc           #10                 // String ERROR
+       207: areturn
+      Exception table:
+         from    to  target type
+            78    82    85   Class java/lang/Throwable
+           121   125   128   Class java/lang/Throwable
+            54    69   147   Class java/lang/Throwable
+           104   112   147   Class java/lang/Throwable
+            54    69   156   any
+           104   112   156   any
+           167   171   174   Class java/lang/Throwable
+           147   158   156   any
+             0   203   204   Class java/lang/Exception
+
+  public static java.lang.String getClientClassSourceFingerprint();
+    Code:
+         0: ldc           #11                 // String SHA-1
+         2: invokestatic  #103                // Method java/security/MessageDigest.getInstance:(Ljava/lang/String;)Ljava/security/MessageDigest;
+         5: astore_0
+         6: getstatic     #67                 // Field kz:Ljava/util/List;
+         9: invokeinterface #127,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+        14: astore_1
+        15: aload_1
+        16: invokeinterface #124,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+        21: ifeq          60
+        24: aload_1
+        25: invokeinterface #125,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        30: checkcast     #42                 // class java/lang/String
+        33: astore_2
+        34: aload_0
+        35: aload_2
+        36: ldc           #13                 // String UTF-8
+        38: invokevirtual #89                 // Method java/lang/String.getBytes:(Ljava/lang/String;)[B
+        41: invokevirtual #104                // Method java/security/MessageDigest.update:([B)V
+        44: aload_0
+        45: aload_2
+        46: invokestatic  #119                // Method x:(Ljava/lang/String;)Ljava/lang/String;
+        49: ldc           #13                 // String UTF-8
+        51: invokevirtual #89                 // Method java/lang/String.getBytes:(Ljava/lang/String;)[B
+        54: invokevirtual #104                // Method java/security/MessageDigest.update:([B)V
+        57: goto          15
+        60: aload_0
+        61: invokevirtual #102                // Method java/security/MessageDigest.digest:()[B
+        64: invokestatic  #116                // Method a:([B)Ljava/lang/String;
+        67: areturn
+        68: astore_0
+        69: ldc           #10                 // String ERROR
+        71: areturn
+      Exception table:
+         from    to  target type
+             0    67    68   Class java/lang/Exception
+
+  private static java.lang.String a(java.net.URL);
+    Code:
+         0: new           #32                 // class java/io/File
+         3: dup
+         4: aload_0
+         5: invokevirtual #98                 // Method java/net/URL.getFile:()Ljava/lang/String;
+         8: invokespecial #72                 // Method java/io/File."<init>":(Ljava/lang/String;)V
+        11: invokevirtual #73                 // Method java/io/File.getName:()Ljava/lang/String;
+        14: astore_1
+        15: aload_0
+        16: invokevirtual #100                // Method java/net/URL.openStream:()Ljava/io/InputStream;
+        19: astore_2
+        20: aconst_null
+        21: astore_3
+        22: new           #43                 // class java/lang/StringBuilder
+        25: dup
+        26: invokespecial #92                 // Method java/lang/StringBuilder."<init>":()V
+        29: aload_2
+        30: invokestatic  #114                // Method a:(Ljava/io/InputStream;)Ljava/lang/String;
+        33: invokevirtual #94                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        36: ldc           #1                  // String \u0000
+        38: invokevirtual #94                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        41: aload_1
+        42: invokevirtual #94                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        45: invokevirtual #95                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+        48: astore        4
+        50: aload_2
+        51: ifnull        80
+        54: aload_3
+        55: ifnull        76
+        58: aload_2
+        59: invokevirtual #75                 // Method java/io/InputStream.close:()V
+        62: goto          80
+        65: astore        5
+        67: aload_3
+        68: aload         5
+        70: invokevirtual #96                 // Method java/lang/Throwable.addSuppressed:(Ljava/lang/Throwable;)V
+        73: goto          80
+        76: aload_2
+        77: invokevirtual #75                 // Method java/io/InputStream.close:()V
+        80: aload         4
+        82: areturn
+        83: astore        4
+        85: aload         4
+        87: astore_3
+        88: aload         4
+        90: athrow
+        91: astore        6
+        93: aload_2
+        94: ifnull        123
+        97: aload_3
+        98: ifnull        119
+       101: aload_2
+       102: invokevirtual #75                 // Method java/io/InputStream.close:()V
+       105: goto          123
+       108: astore        7
+       110: aload_3
+       111: aload         7
+       113: invokevirtual #96                 // Method java/lang/Throwable.addSuppressed:(Ljava/lang/Throwable;)V
+       116: goto          123
+       119: aload_2
+       120: invokevirtual #75                 // Method java/io/InputStream.close:()V
+       123: aload         6
+       125: athrow
+       126: astore_2
+       127: aconst_null
+       128: areturn
+       129: astore_2
+       130: getstatic     #65                 // Field java/lang/System.out:Ljava/io/PrintStream;
+       133: aload_2
+       134: invokevirtual #74                 // Method java/io/IOException.toString:()Ljava/lang/String;
+       137: invokevirtual #77                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+       140: new           #43                 // class java/lang/StringBuilder
+       143: dup
+       144: invokespecial #92                 // Method java/lang/StringBuilder."<init>":()V
+       147: ldc           #9                  // String 0000000000000000000000000000000000000000\u0000
+       149: invokevirtual #94                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       152: aload_1
+       153: invokevirtual #90                 // Method java/lang/String.isEmpty:()Z
+       156: ifeq          164
+       159: ldc           #27                 // String unknown
+       161: goto          165
+       164: aload_1
+       165: invokevirtual #94                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       168: invokevirtual #95                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+       171: areturn
+      Exception table:
+         from    to  target type
+            58    62    65   Class java/lang/Throwable
+            22    50    83   Class java/lang/Throwable
+            22    50    91   any
+           101   105   108   Class java/lang/Throwable
+            83    93    91   any
+            15    80   126   Class java/net/UnknownServiceException
+            83   126   126   Class java/net/UnknownServiceException
+            15    80   129   Class java/io/IOException
+            83   126   129   Class java/io/IOException
+
+  private static java.lang.String a(java.io.InputStream) throws java.io.IOException;
+    Code:
+         0: aload_0
+         1: invokestatic  #117                // Method b:(Ljava/io/InputStream;)[B
+         4: invokestatic  #116                // Method a:([B)Ljava/lang/String;
+         7: areturn
+         8: astore_1
+         9: new           #41                 // class java/lang/RuntimeException
+        12: dup
+        13: aload_1
+        14: invokespecial #87                 // Method java/lang/RuntimeException."<init>":(Ljava/lang/Throwable;)V
+        17: athrow
+      Exception table:
+         from    to  target type
+             0     7     8   Class java/security/NoSuchAlgorithmException
+
+  private static byte[] b(java.io.InputStream) throws java.io.IOException, java.security.NoSuchAlgorithmException;
+    Code:
+         0: ldc           #12                 // String SHA1
+         2: invokestatic  #103                // Method java/security/MessageDigest.getInstance:(Ljava/lang/String;)Ljava/security/MessageDigest;
+         5: astore_1
+         6: sipush        4096
+         9: newarray       byte
+        11: astore_2
+        12: aload_0
+        13: aload_2
+        14: iconst_0
+        15: sipush        4096
+        18: invokevirtual #76                 // Method java/io/InputStream.read:([BII)I
+        21: istore_3
+        22: iload_3
+        23: iconst_m1
+        24: if_icmple     47
+        27: aload_1
+        28: aload_2
+        29: iconst_0
+        30: iload_3
+        31: invokevirtual #105                // Method java/security/MessageDigest.update:([BII)V
+        34: aload_0
+        35: aload_2
+        36: iconst_0
+        37: sipush        4096
+        40: invokevirtual #76                 // Method java/io/InputStream.read:([BII)I
+        43: istore_3
+        44: goto          22
+        47: aload_1
+        48: invokevirtual #102                // Method java/security/MessageDigest.digest:()[B
+        51: areturn
+
+  private static java.lang.String a(byte[]);
+    Code:
+         0: new           #43                 // class java/lang/StringBuilder
+         3: dup
+         4: invokespecial #92                 // Method java/lang/StringBuilder."<init>":()V
+         7: ldc           #2                  // String %0
+         9: invokevirtual #94                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        12: aload_0
+        13: arraylength
+        14: iconst_1
+        15: ishl
+        16: invokevirtual #93                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+        19: ldc           #29                 // String x
+        21: invokevirtual #94                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        24: invokevirtual #95                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+        27: iconst_1
+        28: anewarray     #40                 // class java/lang/Object
+        31: dup
+        32: iconst_0
+        33: new           #46                 // class java/math/BigInteger
+        36: dup
+        37: iconst_1
+        38: aload_0
+        39: invokespecial #97                 // Method java/math/BigInteger."<init>":(I[B)V
+        42: aastore
+        43: invokestatic  #88                 // Method java/lang/String.format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+        46: invokevirtual #91                 // Method java/lang/String.toUpperCase:()Ljava/lang/String;
+        49: areturn
+
+  private static java.lang.String x(java.lang.String);
+    Code:
+         0: aload_0
+         1: iconst_0
+         2: ldc           #61                 // class luohuayu/anticheat/CheckUtils
+         4: invokevirtual #80                 // Method java/lang/Class.getClassLoader:()Ljava/lang/ClassLoader;
+         7: invokestatic  #79                 // Method java/lang/Class.forName:(Ljava/lang/String;ZLjava/lang/ClassLoader;)Ljava/lang/Class;
+        10: astore_1
+        11: aload_1
+        12: invokevirtual #82                 // Method java/lang/Class.getProtectionDomain:()Ljava/security/ProtectionDomain;
+        15: ifnull        55
+        18: aload_1
+        19: invokevirtual #82                 // Method java/lang/Class.getProtectionDomain:()Ljava/security/ProtectionDomain;
+        22: invokevirtual #106                // Method java/security/ProtectionDomain.getCodeSource:()Ljava/security/CodeSource;
+        25: ifnull        55
+        28: aload_1
+        29: invokevirtual #82                 // Method java/lang/Class.getProtectionDomain:()Ljava/security/ProtectionDomain;
+        32: invokevirtual #106                // Method java/security/ProtectionDomain.getCodeSource:()Ljava/security/CodeSource;
+        35: invokevirtual #101                // Method java/security/CodeSource.getLocation:()Ljava/net/URL;
+        38: ifnull        55
+        41: aload_1
+        42: invokevirtual #82                 // Method java/lang/Class.getProtectionDomain:()Ljava/security/ProtectionDomain;
+        45: invokevirtual #106                // Method java/security/ProtectionDomain.getCodeSource:()Ljava/security/CodeSource;
+        48: invokevirtual #101                // Method java/security/CodeSource.getLocation:()Ljava/net/URL;
+        51: invokestatic  #118                // Method b:(Ljava/net/URL;)Ljava/lang/String;
+        54: areturn
+        55: aload_1
+        56: invokevirtual #80                 // Method java/lang/Class.getClassLoader:()Ljava/lang/ClassLoader;
+        59: astore_2
+        60: aload_2
+        61: ifnull        92
+        64: new           #43                 // class java/lang/StringBuilder
+        67: dup
+        68: invokespecial #92                 // Method java/lang/StringBuilder."<init>":()V
+        71: ldc           #17                 // String loader:
+        73: invokevirtual #94                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        76: aload_2
+        77: invokevirtual #86                 // Method java/lang/Object.getClass:()Ljava/lang/Class;
+        80: invokevirtual #81                 // Method java/lang/Class.getName:()Ljava/lang/String;
+        83: invokevirtual #94                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        86: invokevirtual #95                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+        89: goto          94
+        92: ldc           #18                 // String loader:bootstrap
+        94: areturn
+        95: astore_1
+        96: new           #43                 // class java/lang/StringBuilder
+        99: dup
+       100: invokespecial #92                 // Method java/lang/StringBuilder."<init>":()V
+       103: ldc           #14                 // String error:
+       105: invokevirtual #94                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       108: aload_0
+       109: invokevirtual #94                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       112: invokevirtual #95                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+       115: areturn
+      Exception table:
+         from    to  target type
+             0    54    95   Class java/lang/Exception
+            55    94    95   Class java/lang/Exception
+
+  private static java.lang.String b(java.net.URL);
+    Code:
+         0: aload_0
+         1: ifnonnull     7
+         4: ldc           #26                 // String source:unknown
+         6: areturn
+         7: aload_0
+         8: invokestatic  #115                // Method a:(Ljava/net/URL;)Ljava/lang/String;
+        11: astore_1
+        12: aload_1
+        13: ifnull        43
+        16: aload_1
+        17: invokevirtual #90                 // Method java/lang/String.isEmpty:()Z
+        20: ifne          43
+        23: new           #43                 // class java/lang/StringBuilder
+        26: dup
+        27: invokespecial #92                 // Method java/lang/StringBuilder."<init>":()V
+        30: ldc           #16                 // String hash:
+        32: invokevirtual #94                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        35: aload_1
+        36: invokevirtual #94                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        39: invokevirtual #95                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+        42: areturn
+        43: new           #32                 // class java/io/File
+        46: dup
+        47: aload_0
+        48: invokevirtual #98                 // Method java/net/URL.getFile:()Ljava/lang/String;
+        51: invokespecial #72                 // Method java/io/File."<init>":(Ljava/lang/String;)V
+        54: invokevirtual #73                 // Method java/io/File.getName:()Ljava/lang/String;
+        57: astore_2
+        58: aload_2
+        59: invokevirtual #90                 // Method java/lang/String.isEmpty:()Z
+        62: ifne          85
+        65: new           #43                 // class java/lang/StringBuilder
+        68: dup
+        69: invokespecial #92                 // Method java/lang/StringBuilder."<init>":()V
+        72: ldc           #15                 // String file:
+        74: invokevirtual #94                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        77: aload_2
+        78: invokevirtual #94                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        81: invokevirtual #95                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+        84: areturn
+        85: new           #43                 // class java/lang/StringBuilder
+        88: dup
+        89: invokespecial #92                 // Method java/lang/StringBuilder."<init>":()V
+        92: ldc           #28                 // String url:
+        94: invokevirtual #94                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        97: aload_0
+        98: invokevirtual #99                 // Method java/net/URL.getProtocol:()Ljava/lang/String;
+       101: invokevirtual #94                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       104: invokevirtual #95                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+       107: areturn
+
+  static {};
+    Code:
+         0: bipush        6
+         2: anewarray     #42                 // class java/lang/String
+         5: dup
+         6: iconst_0
+         7: ldc           #3                  // String /META-INF/MANIFEST.MF
+         9: aastore
+        10: dup
+        11: iconst_1
+        12: ldc           #5                  // String /luohuayu/anticheat/CatAntiCheatMod.class
+        14: aastore
+        15: dup
+        16: iconst_2
+        17: ldc           #4                  // String /luohuayu/anticheat/AntiCheatPacketMessageHandler.class
+        19: aastore
+        20: dup
+        21: iconst_3
+        22: ldc           #6                  // String /luohuayu/anticheat/RuntimeInjectCheck.class
+        24: aastore
+        25: dup
+        26: iconst_4
+        27: ldc           #7                  // String /luohuayu/anticheat/asm/AntiCheatCorePlugin.class
+        29: aastore
+        30: dup
+        31: iconst_5
+        32: ldc           #8                  // String /luohuayu/anticheat/asm/AntiCheatTransformer.class
+        34: aastore
+        35: invokestatic  #108                // Method java/util/Arrays.asList:([Ljava/lang/Object;)Ljava/util/List;
+        38: putstatic     #66                 // Field ky:Ljava/util/List;
+        41: iconst_5
+        42: anewarray     #42                 // class java/lang/String
+        45: dup
+        46: iconst_0
+        47: ldc           #20                 // String luohuayu.anticheat.CatAntiCheatMod
+        49: aastore
+        50: dup
+        51: iconst_1
+        52: ldc           #19                 // String luohuayu.anticheat.AntiCheatPacketMessageHandler
+        54: aastore
+        55: dup
+        56: iconst_2
+        57: ldc           #21                 // String luohuayu.anticheat.RuntimeInjectCheck
+        59: aastore
+        60: dup
+        61: iconst_3
+        62: ldc           #22                 // String luohuayu.anticheat.asm.AntiCheatCorePlugin
+        64: aastore
+        65: dup
+        66: iconst_4
+        67: ldc           #23                 // String luohuayu.anticheat.asm.AntiCheatTransformer
+        69: aastore
+        70: invokestatic  #108                // Method java/util/Arrays.asList:([Ljava/lang/Object;)Ljava/util/List;
+        73: putstatic     #67                 // Field kz:Ljava/util/List;
+        76: return
+}

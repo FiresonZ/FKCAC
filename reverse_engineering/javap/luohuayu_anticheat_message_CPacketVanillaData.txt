@@ -1,0 +1,64 @@
+Compiled from "CPacketVanillaData.java"
+public class luohuayu.anticheat.message.CPacketVanillaData implements cpw.mods.fml.common.network.simpleimpl.IMessage {
+  private boolean lu;
+
+  private boolean kQ;
+
+  private java.lang.String kR;
+
+  private java.lang.String lf;
+
+  public luohuayu.anticheat.message.CPacketVanillaData(boolean, boolean, java.lang.String, java.lang.String);
+    Code:
+         0: aload_0
+         1: invokespecial #14                 // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: iload_1
+         6: putfield      #11                 // Field lu:Z
+         9: aload_0
+        10: iload_2
+        11: putfield      #8                  // Field kQ:Z
+        14: aload_0
+        15: aload_3
+        16: putfield      #9                  // Field kR:Ljava/lang/String;
+        19: aload_0
+        20: aload         4
+        22: putfield      #10                 // Field lf:Ljava/lang/String;
+        25: return
+
+  public void fromBytes(io.netty.buffer.ByteBuf);
+    Code:
+         0: return
+
+  public void toBytes(io.netty.buffer.ByteBuf);
+    Code:
+         0: aload_1
+         1: aload_0
+         2: getfield      #11                 // Field lu:Z
+         5: invokevirtual #13                 // Method io/netty/buffer/ByteBuf.writeBoolean:(Z)Lio/netty/buffer/ByteBuf;
+         8: pop
+         9: aload_1
+        10: aload_0
+        11: getfield      #8                  // Field kQ:Z
+        14: invokevirtual #13                 // Method io/netty/buffer/ByteBuf.writeBoolean:(Z)Lio/netty/buffer/ByteBuf;
+        17: pop
+        18: aload_1
+        19: aload_0
+        20: getfield      #9                  // Field kR:Ljava/lang/String;
+        23: ifnonnull     31
+        26: ldc           #1                  // String
+        28: goto          35
+        31: aload_0
+        32: getfield      #9                  // Field kR:Ljava/lang/String;
+        35: invokestatic  #12                 // Method cpw/mods/fml/common/network/ByteBufUtils.writeUTF8String:(Lio/netty/buffer/ByteBuf;Ljava/lang/String;)V
+        38: aload_1
+        39: aload_0
+        40: getfield      #10                 // Field lf:Ljava/lang/String;
+        43: ifnonnull     51
+        46: ldc           #1                  // String
+        48: goto          55
+        51: aload_0
+        52: getfield      #10                 // Field lf:Ljava/lang/String;
+        55: invokestatic  #12                 // Method cpw/mods/fml/common/network/ByteBufUtils.writeUTF8String:(Lio/netty/buffer/ByteBuf;Ljava/lang/String;)V
+        58: return
+}

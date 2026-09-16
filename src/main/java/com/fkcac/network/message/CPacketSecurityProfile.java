@@ -1,12 +1,14 @@
 package com.fkcac.network.message;
 
-import cpw.mods.fml.common.network.ByteBufUtils;
+import com.fkcac.network.NetUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import io.netty.buffer.ByteBuf;
 
 /**
  * C -> S, discriminator 15, "CatAntiCheat" channel.
- * Server-initiated security profile request. FKCAC answers with an empty profile.
+ * Security/environment profile the real client reports right after the handshake.
+ * Wire format (matches the reference): 9 VarInt-UTF8 strings, then a {@code long}
+ * timestamp, then 1 final VarInt-UTF8 string (launcher version).
  * Fields: coreA/B/C (strings), envFingerprint, source fields, sessionId, timestamp, launcherVersion.
  */
 public class CPacketSecurityProfile implements IMessage {
@@ -48,16 +50,16 @@ public class CPacketSecurityProfile implements IMessage {
 
     @Override
     public void toBytes(ByteBuf buf) {
-        ByteBufUtils.writeUTF8String(buf, coreA);
-        ByteBufUtils.writeUTF8String(buf, coreB);
-        ByteBufUtils.writeUTF8String(buf, coreC);
-        ByteBufUtils.writeUTF8String(buf, envFingerprint);
-        ByteBufUtils.writeUTF8String(buf, coreASource);
-        ByteBufUtils.writeUTF8String(buf, coreBSource);
-        ByteBufUtils.writeUTF8String(buf, coreCSource);
-        ByteBufUtils.writeUTF8String(buf, envSource);
-        ByteBufUtils.writeUTF8String(buf, clientSessionId);
+        NetUtils.writeString(buf, coreA);
+        NetUtils.writeString(buf, coreB);
+        NetUtils.writeString(buf, coreC);
+        NetUtils.writeString(buf, envFingerprint);
+        NetUtils.writeString(buf, coreASource);
+        NetUtils.writeString(buf, coreBSource);
+        NetUtils.writeString(buf, coreCSource);
+        NetUtils.writeString(buf, envSource);
+        NetUtils.writeString(buf, clientSessionId);
         buf.writeLong(reportedAt);
-        ByteBufUtils.writeUTF8String(buf, launcherVersion);
+        NetUtils.writeString(buf, launcherVersion);
     }
 }

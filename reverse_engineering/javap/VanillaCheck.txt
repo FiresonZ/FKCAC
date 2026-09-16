@@ -1,0 +1,253 @@
+Compiled from "VanillaCheck.java"
+public class luohuayu.anticheat.VanillaCheck {
+  public luohuayu.anticheat.VanillaCheck();
+    Code:
+         0: aload_0
+         1: invokespecial #35                 // Method java/lang/Object."<init>":()V
+         4: return
+
+  public static void checkVanilla(java.util.List<java.lang.String>, float, boolean, float, int, java.util.List<java.lang.String>, java.util.List<java.lang.String>, java.util.List<java.lang.String>, java.util.List<java.lang.String>, java.util.List<java.lang.String>);
+    Code:
+         0: invokestatic  #50                 // Method net/minecraft/client/Minecraft.func_71410_x:()Lnet/minecraft/client/Minecraft;
+         3: getfield      #29                 // Field net/minecraft/client/Minecraft.field_71474_y:Lnet/minecraft/client/settings/GameSettings;
+         6: getstatic     #30                 // Field net/minecraft/client/settings/GameSettings$Options.GAMMA:Lnet/minecraft/client/settings/GameSettings$Options;
+         9: invokevirtual #51                 // Method net/minecraft/client/settings/GameSettings.func_74296_a:(Lnet/minecraft/client/settings/GameSettings$Options;)F
+        12: f2d
+        13: ldc2_w        #23                 // double 1.5d
+        16: dcmpl
+        17: ifle          24
+        20: iconst_1
+        21: goto          25
+        24: iconst_0
+        25: istore        10
+        27: aload_0
+        28: fload_1
+        29: iload_2
+        30: fload_3
+        31: invokestatic  #43                 // Method a:(Ljava/util/List;FZF)Lluohuayu/anticheat/VanillaCheck$a;
+        34: astore        11
+        36: aload_0
+        37: iload_2
+        38: fload_1
+        39: fload_3
+        40: aload         5
+        42: aload         6
+        44: aload         7
+        46: aload         8
+        48: aload         9
+        50: invokestatic  #40                 // Method luohuayu/anticheat/DataCheckChallenge.buildRulesFingerprint:(Ljava/util/List;ZFFLjava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;)Ljava/lang/String;
+        53: astore        12
+        55: iload         4
+        57: aload         12
+        59: iload         10
+        61: aload         11
+        63: invokestatic  #45                 // Method luohuayu/anticheat/VanillaCheck$a.a:(Lluohuayu/anticheat/VanillaCheck$a;)Z
+        66: aload         11
+        68: invokestatic  #47                 // Method luohuayu/anticheat/VanillaCheck$a.b:(Lluohuayu/anticheat/VanillaCheck$a;)Ljava/lang/String;
+        71: invokestatic  #39                 // Method luohuayu/anticheat/DataCheckChallenge.buildResponse:(ILjava/lang/String;ZZLjava/lang/String;)Ljava/lang/String;
+        74: astore        13
+        76: getstatic     #27                 // Field luohuayu/anticheat/CatAntiCheatMod.instance:Lluohuayu/anticheat/CatAntiCheatMod;
+        79: getfield      #28                 // Field luohuayu/anticheat/CatAntiCheatMod.networkChannel:Lcpw/mods/fml/common/network/simpleimpl/SimpleNetworkWrapper;
+        82: new           #15                 // class luohuayu/anticheat/message/CPacketVanillaData
+        85: dup
+        86: iload         10
+        88: aload         11
+        90: invokestatic  #45                 // Method luohuayu/anticheat/VanillaCheck$a.a:(Lluohuayu/anticheat/VanillaCheck$a;)Z
+        93: aload         11
+        95: invokestatic  #47                 // Method luohuayu/anticheat/VanillaCheck$a.b:(Lluohuayu/anticheat/VanillaCheck$a;)Ljava/lang/String;
+        98: aload         13
+       100: invokespecial #48                 // Method luohuayu/anticheat/message/CPacketVanillaData."<init>":(ZZLjava/lang/String;Ljava/lang/String;)V
+       103: invokevirtual #31                 // Method cpw/mods/fml/common/network/simpleimpl/SimpleNetworkWrapper.sendToServer:(Lcpw/mods/fml/common/network/simpleimpl/IMessage;)V
+       106: return
+
+  private static luohuayu.anticheat.VanillaCheck$a a(java.util.List<java.lang.String>, float, boolean, float);
+    Code:
+         0: aload_0
+         1: ifnull        13
+         4: aload_0
+         5: invokeinterface #55,  1           // InterfaceMethod java/util/List.isEmpty:()Z
+        10: ifeq          17
+        13: invokestatic  #46                 // Method luohuayu/anticheat/VanillaCheck$a.aR:()Lluohuayu/anticheat/VanillaCheck$a;
+        16: areturn
+        17: aload_0
+        18: invokeinterface #56,  1           // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+        23: astore        4
+        25: aload         4
+        27: invokeinterface #53,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+        32: ifeq          67
+        35: aload         4
+        37: invokeinterface #54,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        42: checkcast     #7                  // class java/lang/String
+        45: astore        5
+        47: aload         5
+        49: fload_1
+        50: iload_2
+        51: fload_3
+        52: invokestatic  #42                 // Method a:(Ljava/lang/String;FZF)Z
+        55: ifeq          64
+        58: aload         5
+        60: invokestatic  #44                 // Method luohuayu/anticheat/VanillaCheck$a.C:(Ljava/lang/String;)Lluohuayu/anticheat/VanillaCheck$a;
+        63: areturn
+        64: goto          25
+        67: invokestatic  #46                 // Method luohuayu/anticheat/VanillaCheck$a.aR:()Lluohuayu/anticheat/VanillaCheck$a;
+        70: areturn
+
+  private static boolean a(java.lang.String, float, boolean, float);
+    Code:
+         0: aload_0
+         1: invokestatic  #41                 // Method A:(Ljava/lang/String;)Lnet/minecraft/util/ResourceLocation;
+         4: astore        4
+         6: invokestatic  #50                 // Method net/minecraft/client/Minecraft.func_71410_x:()Lnet/minecraft/client/Minecraft;
+         9: invokevirtual #49                 // Method net/minecraft/client/Minecraft.func_110442_L:()Lnet/minecraft/client/resources/IResourceManager;
+        12: aload         4
+        14: invokeinterface #58,  2           // InterfaceMethod net/minecraft/client/resources/IResourceManager.func_110536_a:(Lnet/minecraft/util/ResourceLocation;)Lnet/minecraft/client/resources/IResource;
+        19: astore        5
+        21: aload         5
+        23: instanceof    #19                 // class net/minecraft/client/resources/SimpleResource
+        26: ifeq          230
+        29: aload         5
+        31: invokeinterface #57,  1           // InterfaceMethod net/minecraft/client/resources/IResource.func_110527_b:()Ljava/io/InputStream;
+        36: invokestatic  #38                 // Method javax/imageio/ImageIO.read:(Ljava/io/InputStream;)Ljava/awt/image/BufferedImage;
+        39: astore        6
+        41: aload         6
+        43: ifnonnull     48
+        46: iconst_0
+        47: ireturn
+        48: aload         6
+        50: invokevirtual #34                 // Method java/awt/image/BufferedImage.getWidth:()I
+        53: istore        7
+        55: aload         6
+        57: invokevirtual #32                 // Method java/awt/image/BufferedImage.getHeight:()I
+        60: istore        8
+        62: iconst_0
+        63: istore        9
+        65: dconst_0
+        66: dstore        10
+        68: iconst_0
+        69: istore        12
+        71: iload         12
+        73: iload         7
+        75: if_icmpge     182
+        78: iconst_0
+        79: istore        13
+        81: iload         13
+        83: iload         8
+        85: if_icmpge     176
+        88: aload         6
+        90: iload         12
+        92: iload         13
+        94: invokevirtual #33                 // Method java/awt/image/BufferedImage.getRGB:(II)I
+        97: istore        14
+        99: iload         14
+       101: bipush        24
+       103: iushr
+       104: sipush        255
+       107: iand
+       108: istore        15
+       110: iload         14
+       112: bipush        16
+       114: iushr
+       115: sipush        255
+       118: iand
+       119: istore        16
+       121: iload         14
+       123: bipush        8
+       125: iushr
+       126: sipush        255
+       129: iand
+       130: istore        17
+       132: iload         14
+       134: sipush        255
+       137: iand
+       138: istore        18
+       140: iload         15
+       142: ifne          148
+       145: iinc          9, 1
+       148: iload_2
+       149: ifeq          170
+       152: dload         10
+       154: iload         16
+       156: iload         17
+       158: iadd
+       159: iload         18
+       161: iadd
+       162: i2d
+       163: ldc2_w        #25                 // double 765.0d
+       166: ddiv
+       167: dadd
+       168: dstore        10
+       170: iinc          13, 1
+       173: goto          81
+       176: iinc          12, 1
+       179: goto          71
+       182: iload         9
+       184: i2f
+       185: iload         7
+       187: iload         8
+       189: imul
+       190: i2f
+       191: fdiv
+       192: fstore        12
+       194: fload         12
+       196: fload_1
+       197: fcmpl
+       198: ifle          203
+       201: iconst_1
+       202: ireturn
+       203: iload_2
+       204: ifeq          228
+       207: dload         10
+       209: iload         7
+       211: iload         8
+       213: imul
+       214: i2d
+       215: ddiv
+       216: dstore        13
+       218: dload         13
+       220: fload_3
+       221: f2d
+       222: dcmpl
+       223: ifle          228
+       226: iconst_1
+       227: ireturn
+       228: iconst_0
+       229: ireturn
+       230: goto          235
+       233: astore        4
+       235: iconst_0
+       236: ireturn
+      Exception table:
+         from    to  target type
+             0    47   233   Class java/lang/Exception
+            48   202   233   Class java/lang/Exception
+           203   227   233   Class java/lang/Exception
+           228   229   233   Class java/lang/Exception
+
+  private static net.minecraft.util.ResourceLocation A(java.lang.String);
+    Code:
+         0: aload_0
+         1: ldc           #1                  // String :
+         3: invokevirtual #36                 // Method java/lang/String.contains:(Ljava/lang/CharSequence;)Z
+         6: ifeq          31
+         9: aload_0
+        10: ldc           #1                  // String :
+        12: iconst_2
+        13: invokevirtual #37                 // Method java/lang/String.split:(Ljava/lang/String;I)[Ljava/lang/String;
+        16: astore_1
+        17: new           #22                 // class net/minecraft/util/ResourceLocation
+        20: dup
+        21: aload_1
+        22: iconst_0
+        23: aaload
+        24: aload_1
+        25: iconst_1
+        26: aaload
+        27: invokespecial #52                 // Method net/minecraft/util/ResourceLocation."<init>":(Ljava/lang/String;Ljava/lang/String;)V
+        30: areturn
+        31: new           #22                 // class net/minecraft/util/ResourceLocation
+        34: dup
+        35: ldc           #2                  // String minecraft
+        37: aload_0
+        38: invokespecial #52                 // Method net/minecraft/util/ResourceLocation."<init>":(Ljava/lang/String;Ljava/lang/String;)V
+        41: areturn
+}

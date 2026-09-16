@@ -1,0 +1,28 @@
+Compiled from "ServerAuthResultPacket.java"
+public class luohuayu.anticheat.auth.packet.ServerAuthResultPacket implements cpw.mods.fml.common.network.simpleimpl.IMessage {
+  public boolean authorized;
+
+  public java.lang.String result;
+
+  public luohuayu.anticheat.auth.packet.ServerAuthResultPacket();
+    Code:
+         0: aload_0
+         1: invokespecial #9                  // Method java/lang/Object."<init>":()V
+         4: return
+
+  public void fromBytes(io.netty.buffer.ByteBuf);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokevirtual #8                  // Method io/netty/buffer/ByteBuf.readBoolean:()Z
+         5: putfield      #6                  // Field authorized:Z
+         8: aload_0
+         9: aload_1
+        10: invokestatic  #10                 // Method luohuayu/anticheat/a.a:(Lio/netty/buffer/ByteBuf;)Ljava/lang/String;
+        13: putfield      #7                  // Field result:Ljava/lang/String;
+        16: return
+
+  public void toBytes(io.netty.buffer.ByteBuf);
+    Code:
+         0: return
+}

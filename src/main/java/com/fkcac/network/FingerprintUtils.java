@@ -1,59 +1,66 @@
 package com.fkcac.network;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
+import java.net.URL;
+import java.net.UnknownServiceException;
 import java.nio.charset.StandardCharsets;
+import java.security.CodeSource;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.ProtectionDomain;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * Mirrors {@code luohuayu.anticheat.CheckUtils} from the server's CatAntiCheat jar.
+ * Mirrors {@code luohuayu.anticheat.CheckUtils} from the server's modified CatAntiCheat jar,
+ * producing the {@code ld} / {@code le} fingerprints of {@code CPacketHelloReply}.
  *
- * <p>Two fingerprint algorithms are implemented:
- * <ul>
- *   <li>{@link #getClientIntegrityFingerprint()} — hashes the raw bytes of specific class
- *       resources found inside this mod's own JAR, producing the {@code ld} field.</li>
- *   <li>{@link #getClientClassSourceFingerprint()} — hashes the canonical name strings
- *       (converted to slash-separated paths) for the same set of classes, producing the
- *       {@code le} field.</li>
- * </ul>
+ * <p>{@link #getClientIntegrityFingerprint()} (ld): for every entry in the original
+ * {@code ky} path list, updates the digest with the path bytes, then with either the
+ * SHA-1 of the resource bytes (when the resource exists) or the literal {@code "missing"}.
  *
- * <p>These fingerprints are included in {@code CPacketHelloReply} so the server can
- * verify that the client is running the expected mod build.
+ * <p>{@link #getClientClassSourceFingerprint()} (le): for every entry in the original
+ * {@code kz} class list, updates the digest with the canonical name bytes and the
+ * code-source locator of that class ({@code x(name)} → {@code "hash:&lt;jar-sha1&gt;\0&lt;file&gt;"},
+ * {@code "file:..."}, {@code "url:..."}, {@code "loader:..."} or {@code "error:&lt;name&gt;"}
+ * if the class cannot be loaded).
+ *
+ * <p>The path/class lists are kept identical to the reference client. Under FKCAC the
+ * {@code luohuayu.*} resources/classes do not exist, so the same deterministic formulas
+ * produce {@code missing} / {@code error:...} contributions; the handshake response
+ * {@code lf} is therefore still bound to exactly the same algorithm the server expects.
  */
 public final class FingerprintUtils {
 
-    /** Resource paths inside the FKCAC JAR whose raw bytes are hashed for the integrity fingerprint. */
+    /** Original {@code ky}: resource paths inside the anti-cheat jar whose content participates in ld. */
     private static final List<String> INTEGRITY_PATHS = Collections.unmodifiableList(Arrays.asList(
             "/META-INF/MANIFEST.MF",
-            "/com/fkcac/FKCAC.class",
-            "/com/fkcac/network/HandshakeChallenge.class",
-            "/com/fkcac/network/FKCACProtocolHandler.class",
-            "/com/fkcac/network/message/SPacketHello.class",
-            "/com/fkcac/network/message/CPacketHelloReply.class"
+            "/luohuayu/anticheat/CatAntiCheatMod.class",
+            "/luohuayu/anticheat/AntiCheatPacketMessageHandler.class",
+            "/luohuayu/anticheat/RuntimeInjectCheck.class",
+            "/luohuayu/anticheat/asm/AntiCheatCorePlugin.class",
+            "/luohuayu/anticheat/asm/AntiCheatTransformer.class"
     ));
 
-    /** Canonical class names whose slash-separated paths are hashed for the class-source fingerprint. */
+    /** Original {@code kz}: canonical class names whose code-source location participates in le. */
     private static final List<String> CLASS_SOURCE_NAMES = Collections.unmodifiableList(Arrays.asList(
-            "com.fkcac.FKCAC",
-            "com.fkcac.network.HandshakeChallenge",
-            "com.fkcac.network.FKCACProtocolHandler",
-            "com.fkcac.network.message.SPacketHello",
-            "com.fkcac.network.message.CPacketHelloReply"
+            "luohuayu.anticheat.CatAntiCheatMod",
+            "luohuayu.anticheat.AntiCheatPacketMessageHandler",
+            "luohuayu.anticheat.RuntimeInjectCheck",
+            "luohuayu.anticheat.asm.AntiCheatCorePlugin",
+            "luohuayu.anticheat.asm.AntiCheatTransformer"
     ));
 
     private FingerprintUtils() { }
 
     /**
-     * Compute the integrity fingerprint (ld) by hashing each listed resource's raw bytes.
-     * If a resource is not found its bytes contribute the literal {@code "missing"}.
-     *
-     * @return 40-char uppercase hex SHA-1 digest, or "ERROR" on failure
+     * Integrity fingerprint (ld): {@code SHA-1(path + SHA1(resource) | "missing")} over the
+     * original path list. 40-char uppercase hex, or "ERROR".
      */
     public static String getClientIntegrityFingerprint() {
         try {
@@ -66,43 +73,102 @@ public final class FingerprintUtils {
                     md.update("missing".getBytes(StandardCharsets.UTF_8));
                 } else {
                     try {
-                        byte[] bytes = readAll(is);
-                        md.update(bytes);
+                        md.update(sha1(readAll(is)));
                     } finally {
                         try { is.close(); } catch (IOException ignored) { }
                     }
                 }
             }
-            byte[] digest = md.digest();
-            return String.format("%0" + (digest.length << 1) + "x", new BigInteger(1, digest)).toUpperCase();
-        } catch (NoSuchAlgorithmException e) {
+            return toHex(md.digest());
+        } catch (Exception e) {
             return "ERROR";
         }
     }
 
     /**
-     * Compute the class-source fingerprint (le) by hashing each class name after
-     * converting dots to slashes and prepending a leading slash.
-     *
-     * @return 40-char uppercase hex SHA-1 digest, or "ERROR" on failure
+     * Class-source fingerprint (le): {@code SHA-1(name + x(name))} over the original class
+     * list, where {@code x(name)} is the code-source locator of that class.
      */
     public static String getClientClassSourceFingerprint() {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-1");
             for (String name : CLASS_SOURCE_NAMES) {
                 md.update(name.getBytes(StandardCharsets.UTF_8));
-                md.update(normalizePath(name).getBytes(StandardCharsets.UTF_8));
+                md.update(sourceOf(name).getBytes(StandardCharsets.UTF_8));
             }
-            byte[] digest = md.digest();
-            return String.format("%0" + (digest.length << 1) + "x", new BigInteger(1, digest)).toUpperCase();
-        } catch (NoSuchAlgorithmException e) {
+            return toHex(md.digest());
+        } catch (Exception e) {
             return "ERROR";
         }
     }
 
-    /** Convert {@code com.example.Foo} → {@code /com/example/Foo}. */
-    private static String normalizePath(String className) {
-        return "/" + className.replace('.', '/');
+    /** Original {@code x(String)}: code-source locator of a loaded class. */
+    private static String sourceOf(String className) {
+        try {
+            Class<?> cls = Class.forName(className, false, FingerprintUtils.class.getClassLoader());
+            ProtectionDomain pd = cls.getProtectionDomain();
+            CodeSource cs = pd != null ? pd.getCodeSource() : null;
+            URL location = cs != null ? cs.getLocation() : null;
+            if (location != null) {
+                return describeUrl(location);
+            }
+            ClassLoader cl = cls.getClassLoader();
+            return cl != null ? "loader:" + cl.getClass().getName() : "loader:bootstrap";
+        } catch (Exception e) {
+            return "error:" + className;
+        }
+    }
+
+    /** Original {@code b(URL)}: human-readable form of a class's code-source URL. */
+    private static String describeUrl(URL url) {
+        if (url == null) {
+            return "source:unknown";
+        }
+        String hash = fileHash(url);
+        if (hash != null && !hash.isEmpty()) {
+            return "hash:" + hash;
+        }
+        String fileName = new File(url.getFile()).getName();
+        if (!fileName.isEmpty()) {
+            return "file:" + fileName;
+        }
+        return "url:" + url.getProtocol();
+    }
+
+    /** Original {@code a(URL)}: {@code <uppercase-SHA1 of stream>\0<file name>}, or null / zeros. */
+    private static String fileHash(URL url) {
+        String fileName = new File(url.getFile()).getName();
+        try {
+            InputStream in = url.openStream();
+            try {
+                return sha1Hex(in) + "\0" + fileName;
+            } finally {
+                try { in.close(); } catch (IOException ignored) { }
+            }
+        } catch (UnknownServiceException e) {
+            return null;
+        } catch (IOException e) {
+            return "0000000000000000000000000000000000000000\0"
+                    + (fileName.isEmpty() ? "unknown" : fileName);
+        }
+    }
+
+    private static byte[] sha1(InputStream in) throws IOException {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA1");
+            byte[] buffer = new byte[4096];
+            int read;
+            while ((read = in.read(buffer, 0, 4096)) > -1) {
+                md.update(buffer, 0, read);
+            }
+            return md.digest();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static String sha1Hex(InputStream in) throws IOException {
+        return toHex(sha1(in));
     }
 
     private static byte[] readAll(InputStream in) throws IOException {
@@ -113,5 +179,9 @@ public final class FingerprintUtils {
             out.write(buf, 0, n);
         }
         return out.toByteArray();
+    }
+
+    private static String toHex(byte[] digest) {
+        return String.format("%0" + (digest.length << 1) + "x", new BigInteger(1, digest)).toUpperCase();
     }
 }

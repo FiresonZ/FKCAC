@@ -1,12 +1,14 @@
 package com.fkcac.network.message;
 
-import cpw.mods.fml.common.network.ByteBufUtils;
+import com.fkcac.network.NetUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import io.netty.buffer.ByteBuf;
 
 /**
  * C -> S, discriminator 11, "CatAntiCheat" channel.
  * Sent immediately after CPacketHelloReply to announce the client identity for auth.
+ * The client id is written as {@code VarInt length + UTF-8 bytes} (see {@link NetUtils}),
+ * matching the reference packet (NOT FML's ByteBufUtils).
  */
 public class ClientAuthHelloPacket implements IMessage {
     /** Client identity string, always {@code "catanticheat-client"}. */
@@ -26,6 +28,6 @@ public class ClientAuthHelloPacket implements IMessage {
 
     @Override
     public void toBytes(ByteBuf buf) {
-        ByteBufUtils.writeUTF8String(buf, clientId);
+        NetUtils.writeString(buf, clientId);
     }
 }

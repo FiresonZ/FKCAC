@@ -1,0 +1,123 @@
+Compiled from "SPacketDataCheck.java"
+public class luohuayu.anticheat.message.SPacketDataCheck implements cpw.mods.fml.common.network.simpleimpl.IMessage {
+  public java.util.List<java.lang.String> sampleTextures;
+
+  public boolean checkBrightness;
+
+  public float transparentThreshold;
+
+  public float brightnessThreshold;
+
+  public int challengeNonce;
+
+  public java.util.List<java.lang.String> environmentJvmArgs;
+
+  public java.util.List<java.lang.String> environmentSystemProperties;
+
+  public java.util.List<java.lang.String> environmentPropertyPatterns;
+
+  public java.util.List<java.lang.String> environmentClassLoaders;
+
+  public java.util.List<java.lang.String> environmentThreads;
+
+  public luohuayu.anticheat.message.SPacketDataCheck();
+    Code:
+         0: aload_0
+         1: invokespecial #23                 // Method java/lang/Object."<init>":()V
+         4: return
+
+  public void fromBytes(io.netty.buffer.ByteBuf);
+    Code:
+         0: aload_1
+         1: invokevirtual #22                 // Method io/netty/buffer/ByteBuf.readShort:()S
+         4: istore_2
+         5: aload_0
+         6: new           #5                  // class java/util/ArrayList
+         9: dup
+        10: invokespecial #24                 // Method java/util/ArrayList."<init>":()V
+        13: putfield      #16                 // Field sampleTextures:Ljava/util/List;
+        16: iconst_0
+        17: istore_3
+        18: iload_3
+        19: iload_2
+        20: if_icmpge     43
+        23: aload_0
+        24: getfield      #16                 // Field sampleTextures:Ljava/util/List;
+        27: aload_1
+        28: invokestatic  #18                 // Method cpw/mods/fml/common/network/ByteBufUtils.readUTF8String:(Lio/netty/buffer/ByteBuf;)Ljava/lang/String;
+        31: invokeinterface #27,  2           // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+        36: pop
+        37: iinc          3, 1
+        40: goto          18
+        43: aload_0
+        44: aload_1
+        45: invokevirtual #19                 // Method io/netty/buffer/ByteBuf.readBoolean:()Z
+        48: putfield      #10                 // Field checkBrightness:Z
+        51: aload_0
+        52: aload_1
+        53: invokevirtual #20                 // Method io/netty/buffer/ByteBuf.readFloat:()F
+        56: putfield      #17                 // Field transparentThreshold:F
+        59: aload_0
+        60: aload_1
+        61: invokevirtual #20                 // Method io/netty/buffer/ByteBuf.readFloat:()F
+        64: putfield      #8                  // Field brightnessThreshold:F
+        67: aload_0
+        68: aload_1
+        69: invokevirtual #21                 // Method io/netty/buffer/ByteBuf.readInt:()I
+        72: putfield      #9                  // Field challengeNonce:I
+        75: aload_0
+        76: aload_0
+        77: aload_1
+        78: invokespecial #26                 // Method b:(Lio/netty/buffer/ByteBuf;)Ljava/util/List;
+        81: putfield      #12                 // Field environmentJvmArgs:Ljava/util/List;
+        84: aload_0
+        85: aload_0
+        86: aload_1
+        87: invokespecial #26                 // Method b:(Lio/netty/buffer/ByteBuf;)Ljava/util/List;
+        90: putfield      #14                 // Field environmentSystemProperties:Ljava/util/List;
+        93: aload_0
+        94: aload_0
+        95: aload_1
+        96: invokespecial #26                 // Method b:(Lio/netty/buffer/ByteBuf;)Ljava/util/List;
+        99: putfield      #13                 // Field environmentPropertyPatterns:Ljava/util/List;
+       102: aload_0
+       103: aload_0
+       104: aload_1
+       105: invokespecial #26                 // Method b:(Lio/netty/buffer/ByteBuf;)Ljava/util/List;
+       108: putfield      #11                 // Field environmentClassLoaders:Ljava/util/List;
+       111: aload_0
+       112: aload_0
+       113: aload_1
+       114: invokespecial #26                 // Method b:(Lio/netty/buffer/ByteBuf;)Ljava/util/List;
+       117: putfield      #15                 // Field environmentThreads:Ljava/util/List;
+       120: return
+
+  public void toBytes(io.netty.buffer.ByteBuf);
+    Code:
+         0: return
+
+  private java.util.List<java.lang.String> b(io.netty.buffer.ByteBuf);
+    Code:
+         0: aload_1
+         1: invokevirtual #22                 // Method io/netty/buffer/ByteBuf.readShort:()S
+         4: istore_2
+         5: new           #5                  // class java/util/ArrayList
+         8: dup
+         9: iload_2
+        10: invokespecial #25                 // Method java/util/ArrayList."<init>":(I)V
+        13: astore_3
+        14: iconst_0
+        15: istore        4
+        17: iload         4
+        19: iload_2
+        20: if_icmpge     40
+        23: aload_3
+        24: aload_1
+        25: invokestatic  #18                 // Method cpw/mods/fml/common/network/ByteBufUtils.readUTF8String:(Lio/netty/buffer/ByteBuf;)Ljava/lang/String;
+        28: invokeinterface #27,  2           // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+        33: pop
+        34: iinc          4, 1
+        37: goto          17
+        40: aload_3
+        41: areturn
+}

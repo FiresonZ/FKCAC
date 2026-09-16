@@ -1,0 +1,144 @@
+Compiled from "AuthController.java"
+public class luohuayu.anticheat.auth.AuthController {
+  private static final luohuayu.anticheat.auth.AuthState kW;
+
+  public luohuayu.anticheat.auth.AuthController();
+    Code:
+         0: aload_0
+         1: invokespecial #22                 // Method java/lang/Object."<init>":()V
+         4: return
+
+  public static luohuayu.anticheat.auth.AuthState getState();
+    Code:
+         0: getstatic     #20                 // Field kW:Lluohuayu/anticheat/auth/AuthState;
+         3: areturn
+
+  public static java.lang.String buildClientId();
+    Code:
+         0: ldc           #8                  // String catanticheat-client
+         2: areturn
+
+  public static void beginSession();
+    Code:
+         0: getstatic     #20                 // Field kW:Lluohuayu/anticheat/auth/AuthState;
+         3: iconst_0
+         4: invokevirtual #33                 // Method luohuayu/anticheat/auth/AuthState.setAuthorized:(Z)V
+         7: getstatic     #20                 // Field kW:Lluohuayu/anticheat/auth/AuthState;
+        10: iconst_0
+        11: invokevirtual #36                 // Method luohuayu/anticheat/auth/AuthState.setRequired:(Z)V
+        14: getstatic     #20                 // Field kW:Lluohuayu/anticheat/auth/AuthState;
+        17: ldc           #10                 // String hello_sent
+        19: invokevirtual #35                 // Method luohuayu/anticheat/auth/AuthState.setLastResult:(Ljava/lang/String;)V
+        22: getstatic     #20                 // Field kW:Lluohuayu/anticheat/auth/AuthState;
+        25: aconst_null
+        26: invokevirtual #34                 // Method luohuayu/anticheat/auth/AuthState.setChallenge:(Ljava/lang/String;)V
+        29: return
+
+  public static void onChallenge(java.lang.String);
+    Code:
+         0: getstatic     #20                 // Field kW:Lluohuayu/anticheat/auth/AuthState;
+         3: iconst_1
+         4: invokevirtual #36                 // Method luohuayu/anticheat/auth/AuthState.setRequired:(Z)V
+         7: getstatic     #20                 // Field kW:Lluohuayu/anticheat/auth/AuthState;
+        10: aload_0
+        11: invokevirtual #34                 // Method luohuayu/anticheat/auth/AuthState.setChallenge:(Ljava/lang/String;)V
+        14: getstatic     #20                 // Field kW:Lluohuayu/anticheat/auth/AuthState;
+        17: iconst_0
+        18: invokevirtual #33                 // Method luohuayu/anticheat/auth/AuthState.setAuthorized:(Z)V
+        21: getstatic     #20                 // Field kW:Lluohuayu/anticheat/auth/AuthState;
+        24: ldc           #9                  // String challenge_received
+        26: invokevirtual #35                 // Method luohuayu/anticheat/auth/AuthState.setLastResult:(Ljava/lang/String;)V
+        29: return
+
+  public static java.lang.String buildResponse();
+    Code:
+         0: getstatic     #20                 // Field kW:Lluohuayu/anticheat/auth/AuthState;
+         3: invokevirtual #32                 // Method luohuayu/anticheat/auth/AuthState.getChallenge:()Ljava/lang/String;
+         6: astore_0
+         7: invokestatic  #29                 // Method buildClientId:()Ljava/lang/String;
+        10: aload_0
+        11: ldc           #6                  // String NiuNiu-CAC-CLI-2026-H7p4Ds9Jx2Qm8Lv5Rk1T
+        13: invokestatic  #30                 // Method luohuayu/anticheat/auth/AuthCryptoUtil.buildResponse:(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+        16: astore_1
+        17: getstatic     #19                 // Field java/lang/System.out:Ljava/io/PrintStream;
+        20: new           #14                 // class java/lang/StringBuilder
+        23: dup
+        24: invokespecial #25                 // Method java/lang/StringBuilder."<init>":()V
+        27: ldc           #7                  // String [CatAntiCheat][Auth] 构建response challenge=
+        29: invokevirtual #26                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        32: aload_0
+        33: invokestatic  #28                 // Method D:(Ljava/lang/String;)Ljava/lang/String;
+        36: invokevirtual #26                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        39: ldc           #3                  // String , response=
+        41: invokevirtual #26                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        44: aload_1
+        45: invokestatic  #28                 // Method D:(Ljava/lang/String;)Ljava/lang/String;
+        48: invokevirtual #26                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        51: ldc           #2                  // String , clientSalt=
+        53: invokevirtual #26                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        56: ldc           #6                  // String NiuNiu-CAC-CLI-2026-H7p4Ds9Jx2Qm8Lv5Rk1T
+        58: invokestatic  #28                 // Method D:(Ljava/lang/String;)Ljava/lang/String;
+        61: invokevirtual #26                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        64: invokevirtual #27                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+        67: invokevirtual #21                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+        70: aload_1
+        71: areturn
+
+  public static java.lang.String getClientSalt();
+    Code:
+         0: ldc           #6                  // String NiuNiu-CAC-CLI-2026-H7p4Ds9Jx2Qm8Lv5Rk1T
+         2: areturn
+
+  public static void onResult(boolean, java.lang.String);
+    Code:
+         0: getstatic     #20                 // Field kW:Lluohuayu/anticheat/auth/AuthState;
+         3: iconst_1
+         4: invokevirtual #36                 // Method luohuayu/anticheat/auth/AuthState.setRequired:(Z)V
+         7: getstatic     #20                 // Field kW:Lluohuayu/anticheat/auth/AuthState;
+        10: iload_0
+        11: invokevirtual #33                 // Method luohuayu/anticheat/auth/AuthState.setAuthorized:(Z)V
+        14: getstatic     #20                 // Field kW:Lluohuayu/anticheat/auth/AuthState;
+        17: aload_1
+        18: ifnonnull     26
+        21: ldc           #1                  // String
+        23: goto          27
+        26: aload_1
+        27: invokevirtual #35                 // Method luohuayu/anticheat/auth/AuthState.setLastResult:(Ljava/lang/String;)V
+        30: getstatic     #20                 // Field kW:Lluohuayu/anticheat/auth/AuthState;
+        33: aconst_null
+        34: invokevirtual #34                 // Method luohuayu/anticheat/auth/AuthState.setChallenge:(Ljava/lang/String;)V
+        37: return
+
+  private static java.lang.String D(java.lang.String);
+    Code:
+         0: aload_0
+         1: ifnonnull     7
+         4: ldc           #5                  // String <null>
+         6: areturn
+         7: aload_0
+         8: invokevirtual #23                 // Method java/lang/String.length:()I
+        11: bipush        12
+        13: if_icmpgt     20
+        16: aload_0
+        17: goto          45
+        20: new           #14                 // class java/lang/StringBuilder
+        23: dup
+        24: invokespecial #25                 // Method java/lang/StringBuilder."<init>":()V
+        27: aload_0
+        28: iconst_0
+        29: bipush        12
+        31: invokevirtual #24                 // Method java/lang/String.substring:(II)Ljava/lang/String;
+        34: invokevirtual #26                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        37: ldc           #4                  // String ...
+        39: invokevirtual #26                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        42: invokevirtual #27                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+        45: areturn
+
+  static {};
+    Code:
+         0: new           #18                 // class luohuayu/anticheat/auth/AuthState
+         3: dup
+         4: invokespecial #31                 // Method luohuayu/anticheat/auth/AuthState."<init>":()V
+         7: putstatic     #20                 // Field kW:Lluohuayu/anticheat/auth/AuthState;
+        10: return
+}

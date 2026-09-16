@@ -1,0 +1,138 @@
+Compiled from "HandshakeChallenge.java"
+public class luohuayu.anticheat.HandshakeChallenge {
+  public static final int FLAG_VERSION;
+
+  public static final int FLAG_INTEGRITY;
+
+  public static final int FLAG_CLASS_SOURCE;
+
+  public luohuayu.anticheat.HandshakeChallenge();
+    Code:
+         0: aload_0
+         1: invokespecial #25                 // Method java/lang/Object."<init>":()V
+         4: return
+
+  public static java.lang.String buildResponse(int, byte, int, int, java.lang.String, java.lang.String);
+    Code:
+         0: ldc           #7                  // String SHA-1
+         2: invokestatic  #33                 // Method java/security/MessageDigest.getInstance:(Ljava/lang/String;)Ljava/security/MessageDigest;
+         5: astore        6
+         7: aload         6
+         9: ldc           #11                 // String nonce
+        11: iload_2
+        12: invokestatic  #28                 // Method java/lang/String.valueOf:(I)Ljava/lang/String;
+        15: invokestatic  #36                 // Method a:(Ljava/security/MessageDigest;Ljava/lang/String;Ljava/lang/String;)V
+        18: aload         6
+        20: ldc           #12                 // String salt
+        22: iload_1
+        23: sipush        255
+        26: iand
+        27: invokestatic  #28                 // Method java/lang/String.valueOf:(I)Ljava/lang/String;
+        30: invokestatic  #36                 // Method a:(Ljava/security/MessageDigest;Ljava/lang/String;Ljava/lang/String;)V
+        33: aload         6
+        35: ldc           #9                  // String flags
+        37: iload_3
+        38: invokestatic  #28                 // Method java/lang/String.valueOf:(I)Ljava/lang/String;
+        41: invokestatic  #36                 // Method a:(Ljava/security/MessageDigest;Ljava/lang/String;Ljava/lang/String;)V
+        44: iload_3
+        45: iconst_1
+        46: iand
+        47: ifeq          61
+        50: aload         6
+        52: ldc           #13                 // String version
+        54: iload_0
+        55: invokestatic  #28                 // Method java/lang/String.valueOf:(I)Ljava/lang/String;
+        58: invokestatic  #36                 // Method a:(Ljava/security/MessageDigest;Ljava/lang/String;Ljava/lang/String;)V
+        61: iload_3
+        62: iconst_2
+        63: iand
+        64: ifeq          76
+        67: aload         6
+        69: ldc           #10                 // String integrity
+        71: aload         4
+        73: invokestatic  #36                 // Method a:(Ljava/security/MessageDigest;Ljava/lang/String;Ljava/lang/String;)V
+        76: iload_3
+        77: iconst_4
+        78: iand
+        79: ifeq          91
+        82: aload         6
+        84: ldc           #8                  // String classSource
+        86: aload         5
+        88: invokestatic  #36                 // Method a:(Ljava/security/MessageDigest;Ljava/lang/String;Ljava/lang/String;)V
+        91: aload         6
+        93: invokevirtual #32                 // Method java/security/MessageDigest.digest:()[B
+        96: invokestatic  #37                 // Method a:([B)Ljava/lang/String;
+        99: areturn
+       100: astore        6
+       102: ldc           #6                  // String ERROR
+       104: areturn
+      Exception table:
+         from    to  target type
+             0    99   100   Class java/lang/Exception
+
+  private static void a(java.security.MessageDigest, java.lang.String, java.lang.String);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: getstatic     #23                 // Field java/nio/charset/StandardCharsets.UTF_8:Ljava/nio/charset/Charset;
+         5: invokevirtual #27                 // Method java/lang/String.getBytes:(Ljava/nio/charset/Charset;)[B
+         8: invokevirtual #35                 // Method java/security/MessageDigest.update:([B)V
+        11: aload_0
+        12: iconst_0
+        13: invokevirtual #34                 // Method java/security/MessageDigest.update:(B)V
+        16: aload_0
+        17: aload_2
+        18: ifnonnull     26
+        21: ldc           #4                  // String
+        23: goto          27
+        26: aload_2
+        27: getstatic     #23                 // Field java/nio/charset/StandardCharsets.UTF_8:Ljava/nio/charset/Charset;
+        30: invokevirtual #27                 // Method java/lang/String.getBytes:(Ljava/nio/charset/Charset;)[B
+        33: invokevirtual #35                 // Method java/security/MessageDigest.update:([B)V
+        36: aload_0
+        37: iconst_m1
+        38: invokevirtual #34                 // Method java/security/MessageDigest.update:(B)V
+        41: return
+
+  private static java.lang.String a(byte[]);
+    Code:
+         0: new           #19                 // class java/lang/StringBuilder
+         3: dup
+         4: aload_0
+         5: arraylength
+         6: iconst_2
+         7: imul
+         8: invokespecial #29                 // Method java/lang/StringBuilder."<init>":(I)V
+        11: astore_1
+        12: aload_0
+        13: astore_2
+        14: aload_2
+        15: arraylength
+        16: istore_3
+        17: iconst_0
+        18: istore        4
+        20: iload         4
+        22: iload_3
+        23: if_icmpge     60
+        26: aload_2
+        27: iload         4
+        29: baload
+        30: istore        5
+        32: aload_1
+        33: ldc           #5                  // String %02X
+        35: iconst_1
+        36: anewarray     #17                 // class java/lang/Object
+        39: dup
+        40: iconst_0
+        41: iload         5
+        43: invokestatic  #24                 // Method java/lang/Byte.valueOf:(B)Ljava/lang/Byte;
+        46: aastore
+        47: invokestatic  #26                 // Method java/lang/String.format:(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
+        50: invokevirtual #30                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        53: pop
+        54: iinc          4, 1
+        57: goto          20
+        60: aload_1
+        61: invokevirtual #31                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+        64: areturn
+}

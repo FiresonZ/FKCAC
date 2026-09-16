@@ -1,0 +1,22 @@
+Compiled from "AntiCheatPacketMessageHandler.java"
+public class luohuayu.anticheat.AntiCheatPacketMessageHandler$b implements cpw.mods.fml.common.network.simpleimpl.IMessageHandler<luohuayu.anticheat.message.CPacketFileHash, cpw.mods.fml.common.network.simpleimpl.IMessage> {
+  public luohuayu.anticheat.AntiCheatPacketMessageHandler$b();
+    Code:
+         0: aload_0
+         1: invokespecial #6                  // Method java/lang/Object."<init>":()V
+         4: return
+
+  public cpw.mods.fml.common.network.simpleimpl.IMessage onMessage(luohuayu.anticheat.message.CPacketFileHash, cpw.mods.fml.common.network.simpleimpl.MessageContext);
+    Code:
+         0: aconst_null
+         1: areturn
+
+  public cpw.mods.fml.common.network.simpleimpl.IMessage onMessage(cpw.mods.fml.common.network.simpleimpl.IMessage, cpw.mods.fml.common.network.simpleimpl.MessageContext);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: checkcast     #5                  // class luohuayu/anticheat/message/CPacketFileHash
+         5: aload_2
+         6: invokevirtual #7                  // Method onMessage:(Lluohuayu/anticheat/message/CPacketFileHash;Lcpw/mods/fml/common/network/simpleimpl/MessageContext;)Lcpw/mods/fml/common/network/simpleimpl/IMessage;
+         9: areturn
+}

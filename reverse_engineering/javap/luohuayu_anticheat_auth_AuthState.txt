@@ -1,0 +1,78 @@
+Compiled from "AuthState.java"
+public class luohuayu.anticheat.auth.AuthState {
+  private boolean kX;
+
+  private boolean authorized;
+
+  private java.lang.String kY;
+
+  private java.lang.String challenge;
+
+  public luohuayu.anticheat.auth.AuthState();
+    Code:
+         0: aload_0
+         1: invokespecial #8                  // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: ldc           #1                  // String disabled
+         7: putfield      #7                  // Field kY:Ljava/lang/String;
+        10: return
+
+  public boolean isAuthorized();
+    Code:
+         0: aload_0
+         1: getfield      #6                  // Field kX:Z
+         4: ifeq          14
+         7: aload_0
+         8: getfield      #4                  // Field authorized:Z
+        11: ifeq          18
+        14: iconst_1
+        15: goto          19
+        18: iconst_0
+        19: ireturn
+
+  public boolean isRequired();
+    Code:
+         0: aload_0
+         1: getfield      #6                  // Field kX:Z
+         4: ireturn
+
+  public void setRequired(boolean);
+    Code:
+         0: aload_0
+         1: iload_1
+         2: putfield      #6                  // Field kX:Z
+         5: return
+
+  public void setAuthorized(boolean);
+    Code:
+         0: aload_0
+         1: iload_1
+         2: putfield      #4                  // Field authorized:Z
+         5: return
+
+  public java.lang.String getLastResult();
+    Code:
+         0: aload_0
+         1: getfield      #7                  // Field kY:Ljava/lang/String;
+         4: areturn
+
+  public void setLastResult(java.lang.String);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: putfield      #7                  // Field kY:Ljava/lang/String;
+         5: return
+
+  public java.lang.String getChallenge();
+    Code:
+         0: aload_0
+         1: getfield      #5                  // Field challenge:Ljava/lang/String;
+         4: areturn
+
+  public void setChallenge(java.lang.String);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: putfield      #5                  // Field challenge:Ljava/lang/String;
+         5: return
+}

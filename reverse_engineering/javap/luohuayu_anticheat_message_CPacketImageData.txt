@@ -1,0 +1,51 @@
+Compiled from "CPacketImageData.java"
+public class luohuayu.anticheat.message.CPacketImageData implements cpw.mods.fml.common.network.simpleimpl.IMessage {
+  private boolean lg;
+
+  private byte[] li;
+
+  public luohuayu.anticheat.message.CPacketImageData();
+    Code:
+         0: aload_0
+         1: invokespecial #12                 // Method java/lang/Object."<init>":()V
+         4: return
+
+  public luohuayu.anticheat.message.CPacketImageData(boolean, byte[]);
+    Code:
+         0: aload_0
+         1: invokespecial #12                 // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: iload_1
+         6: putfield      #8                  // Field lg:Z
+         9: aload_0
+        10: aload_2
+        11: putfield      #9                  // Field li:[B
+        14: aload_2
+        15: arraylength
+        16: sipush        32763
+        19: if_icmple     32
+        22: new           #6                  // class java/lang/RuntimeException
+        25: dup
+        26: ldc           #1                  // String Image data size > 32K
+        28: invokespecial #13                 // Method java/lang/RuntimeException."<init>":(Ljava/lang/String;)V
+        31: athrow
+        32: return
+
+  public void fromBytes(io.netty.buffer.ByteBuf);
+    Code:
+         0: return
+
+  public void toBytes(io.netty.buffer.ByteBuf);
+    Code:
+         0: aload_1
+         1: aload_0
+         2: getfield      #8                  // Field lg:Z
+         5: invokevirtual #10                 // Method io/netty/buffer/ByteBuf.writeBoolean:(Z)Lio/netty/buffer/ByteBuf;
+         8: pop
+         9: aload_1
+        10: aload_0
+        11: getfield      #9                  // Field li:[B
+        14: invokevirtual #11                 // Method io/netty/buffer/ByteBuf.writeBytes:([B)Lio/netty/buffer/ByteBuf;
+        17: pop
+        18: return
+}

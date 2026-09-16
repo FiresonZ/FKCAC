@@ -1,0 +1,36 @@
+Compiled from "SPacketHello.java"
+public class luohuayu.anticheat.message.SPacketHello implements cpw.mods.fml.common.network.simpleimpl.IMessage {
+  public byte salt;
+
+  public int challengeNonce;
+
+  public int challengeFlags;
+
+  public luohuayu.anticheat.message.SPacketHello();
+    Code:
+         0: aload_0
+         1: invokespecial #10                 // Method java/lang/Object."<init>":()V
+         4: return
+
+  public void fromBytes(io.netty.buffer.ByteBuf);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokevirtual #8                  // Method io/netty/buffer/ByteBuf.readByte:()B
+         5: putfield      #7                  // Field salt:B
+         8: aload_0
+         9: aload_1
+        10: invokevirtual #9                  // Method io/netty/buffer/ByteBuf.readInt:()I
+        13: putfield      #6                  // Field challengeNonce:I
+        16: aload_0
+        17: aload_1
+        18: invokevirtual #8                  // Method io/netty/buffer/ByteBuf.readByte:()B
+        21: sipush        255
+        24: iand
+        25: putfield      #5                  // Field challengeFlags:I
+        28: return
+
+  public void toBytes(io.netty.buffer.ByteBuf);
+    Code:
+         0: return
+}

@@ -8,14 +8,17 @@ import java.security.NoSuchAlgorithmException;
 /**
  * Mirrors {@code luohuayu.anticheat.HandshakeChallenge} from the server's CatAntiCheat jar.
  *
- * <p>Computes a SHA-1 hex digest over a structured challenge payload:
+ * <p>Computes a SHA-1 hex digest over a structured challenge payload. Every field is
+ * appended as {@code key + '\0' + value + (byte)0xFF} (the trailing 0xFF separator is
+ * what the original {@code a(MessageDigest, String, String)} helper emits via
+ * {@code MessageDigest.update((byte)-1)}):
  * <pre>
- *   "nonce" + str(nonce) + '\0' +
- *   "salt"  + str(salt & 0xFF) + '\0' +
- *   "flags" + str(flags) + '\0' +
- *   [if flags & 0x01]  "version" + str(version) + '\0'
- *   [if flags & 0x02]  "integrity" + integrityHex + '\0'
- *   [if flags & 0x04]  "classSource" + classSourceHex + '\0'
+ *   "nonce"        + '\0' + str(nonce)        + 0xFF
+ *   "salt"         + '\0' + str(salt & 0xFF)  + 0xFF
+ *   "flags"        + '\0' + str(flags)        + 0xFF
+ *   [if flags & 0x01] "version"     + '\0' + str(version)       + 0xFF
+ *   [if flags & 0x02] "integrity"   + '\0' + integrityHex      + 0xFF
+ *   [if flags & 0x04] "classSource" + '\0' + classSourceHex    + 0xFF
  * </pre>
  * The result is a 40-character uppercase hex string.
  */
@@ -33,8 +36,8 @@ public final class HandshakeChallenge {
      * @param salt          salt byte from {@code SPacketHello}
      * @param nonce         challenge nonce (int) from {@code SPacketHello}
      * @param flags         challenge flags bitmask from {@code SPacketHello}
-     * @param integrityHex  integrity fingerprint (ld) from {@link ProtocolUtils#getClientIntegrityFingerprint()}
-     * @param classSourceHex class-source fingerprint (le) from {@link ProtocolUtils#getClientClassSourceFingerprint()}
+     * @param integrityHex  integrity fingerprint (ld) from {@link FingerprintUtils#getClientIntegrityFingerprint()}
+     * @param classSourceHex class-source fingerprint (le) from {@link FingerprintUtils#getClientClassSourceFingerprint()}
      * @return 40-char uppercase hex SHA-1 digest, or "ERROR" on failure
      */
     public static String buildResponse(int version, byte salt, int nonce, int flags,
@@ -63,6 +66,8 @@ public final class HandshakeChallenge {
     private static void appendField(MessageDigest md, String key, String value) {
         md.update(key.getBytes(StandardCharsets.UTF_8));
         md.update('\0');
-        md.update(value.getBytes(StandardCharsets.UTF_8));
+        md.update((value != null ? value : "").getBytes(StandardCharsets.UTF_8));
+        // The original helper ends every field with MessageDigest.update((byte)-1).
+        md.update((byte) 0xFF);
     }
 }

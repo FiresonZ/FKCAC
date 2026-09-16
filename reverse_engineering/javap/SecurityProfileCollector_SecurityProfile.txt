@@ -1,0 +1,63 @@
+Compiled from "SecurityProfileCollector.java"
+public final class luohuayu.anticheat.security.SecurityProfileCollector$SecurityProfile {
+  public final java.lang.String coreA;
+
+  public final java.lang.String coreB;
+
+  public final java.lang.String coreC;
+
+  public final java.lang.String envFingerprint;
+
+  public final java.lang.String coreASource;
+
+  public final java.lang.String coreBSource;
+
+  public final java.lang.String coreCSource;
+
+  public final java.lang.String envSource;
+
+  public final java.lang.String clientSessionId;
+
+  public final long reportedAt;
+
+  public final java.lang.String launcherVersion;
+
+  public luohuayu.anticheat.security.SecurityProfileCollector$SecurityProfile(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, long, java.lang.String);
+    Code:
+         0: aload_0
+         1: invokespecial #15                 // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: aload_1
+         6: putfield      #5                  // Field coreA:Ljava/lang/String;
+         9: aload_0
+        10: aload_2
+        11: putfield      #7                  // Field coreB:Ljava/lang/String;
+        14: aload_0
+        15: aload_3
+        16: putfield      #9                  // Field coreC:Ljava/lang/String;
+        19: aload_0
+        20: aload         4
+        22: putfield      #11                 // Field envFingerprint:Ljava/lang/String;
+        25: aload_0
+        26: aload         5
+        28: putfield      #6                  // Field coreASource:Ljava/lang/String;
+        31: aload_0
+        32: aload         6
+        34: putfield      #8                  // Field coreBSource:Ljava/lang/String;
+        37: aload_0
+        38: aload         7
+        40: putfield      #10                 // Field coreCSource:Ljava/lang/String;
+        43: aload_0
+        44: aload         8
+        46: putfield      #12                 // Field envSource:Ljava/lang/String;
+        49: aload_0
+        50: aload         9
+        52: putfield      #4                  // Field clientSessionId:Ljava/lang/String;
+        55: aload_0
+        56: lload         10
+        58: putfield      #14                 // Field reportedAt:J
+        61: aload_0
+        62: aload         12
+        64: putfield      #13                 // Field launcherVersion:Ljava/lang/String;
+        67: return
+}

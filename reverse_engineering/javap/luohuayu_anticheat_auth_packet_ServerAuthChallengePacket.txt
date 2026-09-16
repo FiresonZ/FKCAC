@@ -1,0 +1,22 @@
+Compiled from "ServerAuthChallengePacket.java"
+public class luohuayu.anticheat.auth.packet.ServerAuthChallengePacket implements cpw.mods.fml.common.network.simpleimpl.IMessage {
+  public java.lang.String challenge;
+
+  public luohuayu.anticheat.auth.packet.ServerAuthChallengePacket();
+    Code:
+         0: aload_0
+         1: invokespecial #6                  // Method java/lang/Object."<init>":()V
+         4: return
+
+  public void fromBytes(io.netty.buffer.ByteBuf);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokestatic  #7                  // Method luohuayu/anticheat/a.a:(Lio/netty/buffer/ByteBuf;)Ljava/lang/String;
+         5: putfield      #5                  // Field challenge:Ljava/lang/String;
+         8: return
+
+  public void toBytes(io.netty.buffer.ByteBuf);
+    Code:
+         0: return
+}

@@ -1,0 +1,46 @@
+Compiled from "AntiCheatPacketMessageHandler.java"
+public class luohuayu.anticheat.AntiCheatPacketMessageHandler$j implements cpw.mods.fml.common.network.simpleimpl.IMessageHandler<luohuayu.anticheat.message.SPacketClassCheck, cpw.mods.fml.common.network.simpleimpl.IMessage> {
+  public luohuayu.anticheat.AntiCheatPacketMessageHandler$j();
+    Code:
+         0: aload_0
+         1: invokespecial #17                 // Method java/lang/Object."<init>":()V
+         4: return
+
+  public cpw.mods.fml.common.network.simpleimpl.IMessage onMessage(luohuayu.anticheat.message.SPacketClassCheck, cpw.mods.fml.common.network.simpleimpl.MessageContext);
+    Code:
+         0: invokestatic  #25                 // Method net/minecraft/client/Minecraft.func_71410_x:()Lnet/minecraft/client/Minecraft;
+         3: invokevirtual #24                 // Method net/minecraft/client/Minecraft.func_152345_ab:()Z
+         6: ifne          28
+         9: invokestatic  #25                 // Method net/minecraft/client/Minecraft.func_71410_x:()Lnet/minecraft/client/Minecraft;
+        12: new           #7                  // class luohuayu/anticheat/AntiCheatPacketMessageHandler$j$1
+        15: dup
+        16: aload_0
+        17: aload_1
+        18: aload_2
+        19: invokespecial #20                 // Method luohuayu/anticheat/AntiCheatPacketMessageHandler$j$1."<init>":(Lluohuayu/anticheat/AntiCheatPacketMessageHandler$j;Lluohuayu/anticheat/message/SPacketClassCheck;Lcpw/mods/fml/common/network/simpleimpl/MessageContext;)V
+        22: invokevirtual #23                 // Method net/minecraft/client/Minecraft.func_152344_a:(Ljava/lang/Runnable;)Lcom/google/common/util/concurrent/ListenableFuture;
+        25: pop
+        26: aconst_null
+        27: areturn
+        28: getstatic     #13                 // Field luohuayu/anticheat/CatAntiCheatMod.instance:Lluohuayu/anticheat/CatAntiCheatMod;
+        31: getfield      #14                 // Field luohuayu/anticheat/CatAntiCheatMod.networkChannel:Lcpw/mods/fml/common/network/simpleimpl/SimpleNetworkWrapper;
+        34: new           #10                 // class luohuayu/anticheat/message/CPacketClassFound
+        37: dup
+        38: aload_1
+        39: getfield      #15                 // Field luohuayu/anticheat/message/SPacketClassCheck.classList:Ljava/util/List;
+        42: invokestatic  #21                 // Method luohuayu/anticheat/CheckUtils.checkClass:(Ljava/util/List;)Ljava/util/List;
+        45: invokestatic  #18                 // Method luohuayu/anticheat/AntiCheatPacketMessageHandler.aG:()B
+        48: invokespecial #22                 // Method luohuayu/anticheat/message/CPacketClassFound."<init>":(Ljava/util/List;B)V
+        51: invokevirtual #16                 // Method cpw/mods/fml/common/network/simpleimpl/SimpleNetworkWrapper.sendToServer:(Lcpw/mods/fml/common/network/simpleimpl/IMessage;)V
+        54: aconst_null
+        55: areturn
+
+  public cpw.mods.fml.common.network.simpleimpl.IMessage onMessage(cpw.mods.fml.common.network.simpleimpl.IMessage, cpw.mods.fml.common.network.simpleimpl.MessageContext);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: checkcast     #11                 // class luohuayu/anticheat/message/SPacketClassCheck
+         5: aload_2
+         6: invokevirtual #19                 // Method onMessage:(Lluohuayu/anticheat/message/SPacketClassCheck;Lcpw/mods/fml/common/network/simpleimpl/MessageContext;)Lcpw/mods/fml/common/network/simpleimpl/IMessage;
+         9: areturn
+}

@@ -22,6 +22,10 @@ import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.zip.GZIPOutputStream;
+
 /**
  * Handlers for the "CatAntiCheat" plugin channel. Every server -> client request is
  * answered with a pristine-client response so the (frozen) CatAntiCheat-Public server
@@ -46,7 +50,7 @@ public final class FKCACProtocolHandler {
     /** CatAntiCheat hardcoded client salt (from AuthController.getClientSalt()). */
     private static final String CLIENT_SALT = "NiuNiu-CAC-CLI-2026-H7p4Ds9Jx2Qm8Lv5Rk1T";
 
-    /** 1x1 px valid PNG used as a fake "clean" screenshot. */
+    /** 1x1 px valid PNG used as a fake "clean" screenshot (gzip-compressed on send). */
     private static final byte[] BLANK_PNG = {
         (byte) 0x89, 'P', 'N', 'G', 0x0D, 0x0A, 0x1A, 0x0A,
         0x00, 0x00, 0x00, 0x0D, 'I', 'H', 'D', 'R',
@@ -61,26 +65,44 @@ public final class FKCACProtocolHandler {
 
     private FKCACProtocolHandler() { }
 
+    /** GZip a payload, mirroring CheckUtils.screenshot()'s GZIPOutputStream wrapper. */
+    private static byte[] gzip(byte[] data) {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try {
+            GZIPOutputStream gzip = new GZIPOutputStream(out);
+            gzip.write(data);
+            gzip.flush();
+            gzip.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return out.toByteArray();
+    }
+
     /** SPacketHello (0) -> CPacketHelloReply (4): handshake with protocol version, echoed salt, and three fingerprints.
-     *  Also sends {@link ClientAuthHelloPacket} (11) to the server on the client side to kick off auth. */
+     *  Mirrors the reference client's order: HelloReply, then {@link ClientAuthHelloPacket} (11),
+     *  then the {@link com.fkcac.network.message.CPacketSecurityProfile} (15). */
     public static final class HelloHandler implements IMessageHandler<SPacketHello, IMessage> {
         @Override
         public IMessage onMessage(SPacketHello message, MessageContext ctx) {
             if (ctx.side.isClient()) {
                 salt = message.salt;
-                // Kick off the auth protocol immediately after the handshake.
+                int version = SpoofConfig.protocolVersion();
+                String ld = FingerprintUtils.getClientIntegrityFingerprint();
+                String le = FingerprintUtils.getClientClassSourceFingerprint();
+                String lf = HandshakeChallenge.buildResponse(
+                        version, message.salt, message.challengeNonce, message.challengeFlags, ld, le);
+                // Send everything explicitly, in the same order as the original client.
+                FKCAC.networkChannel.sendToServer(new CPacketHelloReply(version, message.salt, ld, le, lf));
                 if (SpoofConfig.spoofAuth()) {
                     FKCAC.networkChannel.sendToServer(new ClientAuthHelloPacket(CLIENT_ID));
                 }
+                if (SpoofConfig.spoofSecurityProfile()) {
+                    FKCAC.networkChannel.sendToServer(new CPacketSecurityProfile(
+                            "", "", "", "", "", "", "", "", "", System.currentTimeMillis(), ""));
+                }
             }
-            int version = SpoofConfig.protocolVersion();
-            String ld = FingerprintUtils.getClientIntegrityFingerprint();
-            String le = FingerprintUtils.getClientClassSourceFingerprint();
-            String lf = HandshakeChallenge.buildResponse(
-                    version, message.salt,
-                    message.challengeNonce, message.challengeFlags,
-                    ld, le);
-            return new CPacketHelloReply(version, message.salt, ld, le, lf);
+            return null;
         }
     }
 
@@ -118,24 +140,36 @@ public final class FKCACProtocolHandler {
         }
     }
 
-    /** SPacketScreenshot (3) -> CPacketImageData (8) with a blank PNG. */
+    /** SPacketScreenshot (3) -> CPacketImageData (8): gzip-compressed blank PNG, single last chunk. */
     public static final class ScreenshotHandler implements IMessageHandler<SPacketScreenshot, IMessage> {
         @Override
         public IMessage onMessage(SPacketScreenshot message, MessageContext ctx) {
             if (SpoofConfig.spoofScreenshot()) {
-                return new CPacketImageData(true, BLANK_PNG);
+                // The real client gzips the PNG before chunking; the server gunzips on receive.
+                return new CPacketImageData(true, gzip(BLANK_PNG));
             }
             return null; // send nothing, let the server time out the screenshot check
         }
     }
 
-    /** SPacketDataCheck (9) -> CPacketVanillaData (10): report pristine renderer flags. */
+    /** SPacketDataCheck (9) -> CPacketVanillaData (10): pristine vanilla flags + DataCheck challenge response. */
     public static final class DataCheckHandler implements IMessageHandler<SPacketDataCheck, IMessage> {
         @Override
         public IMessage onMessage(SPacketDataCheck message, MessageContext ctx) {
-            // A clean client has gamma <= 1.5 (lighting=false) and no transparent texture pack
-            // (transparentTexture=false); neither server toggle can flag this.
-            return new CPacketVanillaData(false, false);
+            if (ctx.side.isClient()) {
+                // A clean client has no brightness boost and no suspicious textures; the
+                // response must still be computed from the server-provided rules/nonce.
+                String rulesFingerprint = DataCheckChallenge.buildRulesFingerprint(
+                        message.sampleTextures, message.checkBrightness,
+                        message.transparentThreshold, message.brightnessThreshold,
+                        message.environmentJvmArgs, message.environmentSystemProperties,
+                        message.environmentPropertyPatterns,
+                        message.environmentClassLoaders, message.environmentThreads);
+                String response = DataCheckChallenge.buildResponse(
+                        message.challengeNonce, rulesFingerprint, false, false, "");
+                return new CPacketVanillaData(false, false, "", response);
+            }
+            return null;
         }
     }
 
@@ -207,7 +241,8 @@ public final class FKCACProtocolHandler {
         public IMessage onMessage(ServerAuthChallengePacket message, MessageContext ctx) {
             if (ctx.side.isClient()) {
                 String challenge = message.challenge;
-                String response = AuthCryptoUtil.buildResponse(CLIENT_ID, CLIENT_SALT, challenge);
+                // Argument order mirrors AuthController.buildResponse() → buildResponse(clientId, challenge, clientSalt).
+                String response = AuthCryptoUtil.buildResponse(CLIENT_ID, challenge, CLIENT_SALT);
                 FKCAC.networkChannel.sendToServer(
                         new ClientAuthResponsePacket(CLIENT_ID, CLIENT_SALT, response));
             }

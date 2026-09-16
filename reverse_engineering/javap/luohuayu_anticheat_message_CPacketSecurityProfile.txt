@@ -1,0 +1,172 @@
+Compiled from "CPacketSecurityProfile.java"
+public class luohuayu.anticheat.message.CPacketSecurityProfile implements cpw.mods.fml.common.network.simpleimpl.IMessage {
+  private java.lang.String lj;
+
+  private java.lang.String lk;
+
+  private java.lang.String ll;
+
+  private java.lang.String lm;
+
+  private java.lang.String ln;
+
+  private java.lang.String lo;
+
+  private java.lang.String lp;
+
+  private java.lang.String lq;
+
+  private java.lang.String lr;
+
+  private long ls;
+
+  private java.lang.String lt;
+
+  public luohuayu.anticheat.message.CPacketSecurityProfile();
+    Code:
+         0: aload_0
+         1: invokespecial #20                 // Method java/lang/Object."<init>":()V
+         4: return
+
+  public luohuayu.anticheat.message.CPacketSecurityProfile(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, long, java.lang.String);
+    Code:
+         0: aload_0
+         1: invokespecial #20                 // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: aload_1
+         6: putfield      #8                  // Field lj:Ljava/lang/String;
+         9: aload_0
+        10: aload_2
+        11: putfield      #9                  // Field lk:Ljava/lang/String;
+        14: aload_0
+        15: aload_3
+        16: putfield      #10                 // Field ll:Ljava/lang/String;
+        19: aload_0
+        20: aload         4
+        22: putfield      #11                 // Field lm:Ljava/lang/String;
+        25: aload_0
+        26: aload         5
+        28: putfield      #12                 // Field ln:Ljava/lang/String;
+        31: aload_0
+        32: aload         6
+        34: putfield      #13                 // Field lo:Ljava/lang/String;
+        37: aload_0
+        38: aload         7
+        40: putfield      #14                 // Field lp:Ljava/lang/String;
+        43: aload_0
+        44: aload         8
+        46: putfield      #15                 // Field lq:Ljava/lang/String;
+        49: aload_0
+        50: aload         9
+        52: putfield      #16                 // Field lr:Ljava/lang/String;
+        55: aload_0
+        56: lload         10
+        58: putfield      #17                 // Field ls:J
+        61: aload_0
+        62: aload         12
+        64: putfield      #18                 // Field lt:Ljava/lang/String;
+        67: return
+
+  public void fromBytes(io.netty.buffer.ByteBuf);
+    Code:
+         0: return
+
+  public void toBytes(io.netty.buffer.ByteBuf);
+    Code:
+         0: aload_1
+         1: aload_0
+         2: getfield      #8                  // Field lj:Ljava/lang/String;
+         5: ifnonnull     13
+         8: ldc           #1                  // String
+        10: goto          17
+        13: aload_0
+        14: getfield      #8                  // Field lj:Ljava/lang/String;
+        17: invokestatic  #21                 // Method luohuayu/anticheat/a.a:(Lio/netty/buffer/ByteBuf;Ljava/lang/String;)V
+        20: aload_1
+        21: aload_0
+        22: getfield      #9                  // Field lk:Ljava/lang/String;
+        25: ifnonnull     33
+        28: ldc           #1                  // String
+        30: goto          37
+        33: aload_0
+        34: getfield      #9                  // Field lk:Ljava/lang/String;
+        37: invokestatic  #21                 // Method luohuayu/anticheat/a.a:(Lio/netty/buffer/ByteBuf;Ljava/lang/String;)V
+        40: aload_1
+        41: aload_0
+        42: getfield      #10                 // Field ll:Ljava/lang/String;
+        45: ifnonnull     53
+        48: ldc           #1                  // String
+        50: goto          57
+        53: aload_0
+        54: getfield      #10                 // Field ll:Ljava/lang/String;
+        57: invokestatic  #21                 // Method luohuayu/anticheat/a.a:(Lio/netty/buffer/ByteBuf;Ljava/lang/String;)V
+        60: aload_1
+        61: aload_0
+        62: getfield      #11                 // Field lm:Ljava/lang/String;
+        65: ifnonnull     73
+        68: ldc           #1                  // String
+        70: goto          77
+        73: aload_0
+        74: getfield      #11                 // Field lm:Ljava/lang/String;
+        77: invokestatic  #21                 // Method luohuayu/anticheat/a.a:(Lio/netty/buffer/ByteBuf;Ljava/lang/String;)V
+        80: aload_1
+        81: aload_0
+        82: getfield      #12                 // Field ln:Ljava/lang/String;
+        85: ifnonnull     93
+        88: ldc           #1                  // String
+        90: goto          97
+        93: aload_0
+        94: getfield      #12                 // Field ln:Ljava/lang/String;
+        97: invokestatic  #21                 // Method luohuayu/anticheat/a.a:(Lio/netty/buffer/ByteBuf;Ljava/lang/String;)V
+       100: aload_1
+       101: aload_0
+       102: getfield      #13                 // Field lo:Ljava/lang/String;
+       105: ifnonnull     113
+       108: ldc           #1                  // String
+       110: goto          117
+       113: aload_0
+       114: getfield      #13                 // Field lo:Ljava/lang/String;
+       117: invokestatic  #21                 // Method luohuayu/anticheat/a.a:(Lio/netty/buffer/ByteBuf;Ljava/lang/String;)V
+       120: aload_1
+       121: aload_0
+       122: getfield      #14                 // Field lp:Ljava/lang/String;
+       125: ifnonnull     133
+       128: ldc           #1                  // String
+       130: goto          137
+       133: aload_0
+       134: getfield      #14                 // Field lp:Ljava/lang/String;
+       137: invokestatic  #21                 // Method luohuayu/anticheat/a.a:(Lio/netty/buffer/ByteBuf;Ljava/lang/String;)V
+       140: aload_1
+       141: aload_0
+       142: getfield      #15                 // Field lq:Ljava/lang/String;
+       145: ifnonnull     153
+       148: ldc           #1                  // String
+       150: goto          157
+       153: aload_0
+       154: getfield      #15                 // Field lq:Ljava/lang/String;
+       157: invokestatic  #21                 // Method luohuayu/anticheat/a.a:(Lio/netty/buffer/ByteBuf;Ljava/lang/String;)V
+       160: aload_1
+       161: aload_0
+       162: getfield      #16                 // Field lr:Ljava/lang/String;
+       165: ifnonnull     173
+       168: ldc           #1                  // String
+       170: goto          177
+       173: aload_0
+       174: getfield      #16                 // Field lr:Ljava/lang/String;
+       177: invokestatic  #21                 // Method luohuayu/anticheat/a.a:(Lio/netty/buffer/ByteBuf;Ljava/lang/String;)V
+       180: aload_1
+       181: aload_0
+       182: getfield      #17                 // Field ls:J
+       185: invokevirtual #19                 // Method io/netty/buffer/ByteBuf.writeLong:(J)Lio/netty/buffer/ByteBuf;
+       188: pop
+       189: aload_1
+       190: aload_0
+       191: getfield      #18                 // Field lt:Ljava/lang/String;
+       194: ifnonnull     202
+       197: ldc           #1                  // String
+       199: goto          206
+       202: aload_0
+       203: getfield      #18                 // Field lt:Ljava/lang/String;
+       206: invokestatic  #21                 // Method luohuayu/anticheat/a.a:(Lio/netty/buffer/ByteBuf;Ljava/lang/String;)V
+       209: return
+}
