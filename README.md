@@ -53,6 +53,8 @@ FKCAC 会接管特定反作弊插件所使用的通讯通道，并以“纯净�
 # 产物在 build/libs/
 ```
 
+> 环境要求：Gradle 需在 **JDK 25** 上运行（`RetroFuturaGradle 2.0.2` 以其编译）；编译 1.7.10 所用的 **Java 8** 由 Gradle 工具链自动供应。
+
 CI 工作流（`.github/workflows/build.yml`，`Minecraft 1.7.10 / Forge`）为**纯手动触发**：
 
 1. 在仓库 **Actions** 页手动运行。
