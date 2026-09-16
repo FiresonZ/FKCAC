@@ -16,9 +16,6 @@ import com.fkcac.network.message.SPacketScreenshot;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
-import net.minecraft.client.Minecraft;
-
-import java.util.List;
 
 /**
  * Handlers for the "CatAntiCheat" plugin channel. Every server -> client request is
@@ -45,7 +42,7 @@ public final class FKCACProtocolHandler {
         0x08, 0x02, 0x00, 0x00, 0x00, (byte) 0x90, 0x77, 0x53,
         (byte) 0xDE, 0x00, 0x00, 0x00, 0x0C, 'I', 'D', 'A', 'T',
         0x08, (byte) 0xD7, 0x63, (byte) 0xF8, (byte) 0xCF, (byte) 0xE0, 0x63, 0x60, 0x00,
-        0x00, 0x00, 0x07, 0x24, 0x62, (byte) 0x84, 0xB6,
+        0x00, 0x00, 0x07, 0x24, 0x62, (byte) 0x84, (byte) 0xB6,
         0x00, 0x00, 0x00, 0x00, 'I', 'E', 'N', 'D',
         (byte) 0xAE, 0x42, 0x60, (byte) 0x82
     };
@@ -72,16 +69,11 @@ public final class FKCACProtocolHandler {
             }
             final byte checkSalt = salt;
             // Mirror the real client: hashing the launch sources must not block the network thread.
+            // SimpleNetworkWrapper.sendToServer is thread-safe, so sending from here is fine.
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    final List<String> list = SpoofConfig.fileHashList();
-                    Minecraft.getMinecraft().addScheduledTask(new Runnable() {
-                        @Override
-                        public void run() {
-                            FKCAC.networkChannel.sendToServer(new CPacketFileHash(list, checkSalt));
-                        }
-                    });
+                    FKCAC.networkChannel.sendToServer(new CPacketFileHash(SpoofConfig.fileHashList(), checkSalt));
                 }
             }).start();
             return null;
